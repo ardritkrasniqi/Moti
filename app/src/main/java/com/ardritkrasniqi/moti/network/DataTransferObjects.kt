@@ -102,6 +102,7 @@ data class WeatherAll(
 
 /**
  *Convert network results to database entities
+ * Konvertimi i resulteve qe vijne nga networku ne entitet te databazes
  */
 fun WeatherList.asDatabaseModel(): WeatherEntity {
     return WeatherEntity(

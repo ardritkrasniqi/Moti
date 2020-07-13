@@ -277,26 +277,31 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="44dp"
+            tools:text="10 km/h"
             android:text="@{viewModel.weather.weatherList.get(0).windSpeed.toString() + ` km/h`}"
             app:layout_constraintBaseline_toBaselineOf="@+id/additionalWindText"
             app:layout_constraintStart_toEndOf="@+id/additionalWindText" />
 
         <TextView
-            android:id="@+id/additionalVisibilityText"
+            android:id="@+id/additionalWindDirection"
             style="@style/AdditionalInfoFieldsText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:text="Visibility"
+            android:text="Wind Dir"
             app:layout_constraintStart_toStartOf="@id/additionalWindText"
             app:layout_constraintTop_toBottomOf="@id/additionalWindText" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="25km"
-            app:layout_constraintBaseline_toBaselineOf="@+id/additionalVisibilityText"
-            app:layout_constraintStart_toStartOf="@+id/textView" />
+        <ImageView
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginStart="6dp"
+            android:src="@drawable/compass"
+            android:id="@+id/compass_image"
+            app:layout_constraintBottom_toBottomOf="@id/additionalWindDirection"
+            app:layout_constraintEnd_toEndOf="@+id/textView"
+            app:layout_constraintStart_toEndOf="@id/additionalWindDirection"
+            app:layout_constraintTop_toTopOf="@id/additionalWindDirection" />
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/guidelineAdditional"
@@ -334,7 +339,7 @@
             android:fontFamily="@font/roboto_condensed_regular"
             android:text="Pressure"
             app:layout_constraintStart_toStartOf="@id/guidelineAdditional"
-            app:layout_constraintTop_toTopOf="@+id/additionalVisibilityText" />
+            app:layout_constraintTop_toTopOf="@+id/additionalWindDirection" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -350,7 +355,7 @@
             android:layout_marginTop="30dp"
             app:layout_constraintEnd_toEndOf="@+id/card3"
             app:layout_constraintStart_toStartOf="@+id/card1"
-            app:layout_constraintTop_toBottomOf="@id/additionalVisibilityText" />
+            app:layout_constraintTop_toBottomOf="@id/additionalWindDirection" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

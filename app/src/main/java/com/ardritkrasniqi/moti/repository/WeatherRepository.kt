@@ -1,6 +1,5 @@
 package com.ardritkrasniqi.moti.repository
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Transformations
 import com.ardritkrasniqi.moti.database.WeatherDatabase
@@ -23,7 +22,6 @@ class WeatherRepository(private val database: WeatherDatabase) {
      *
      */
 
-
     suspend fun refreshWeather(city: String, unit: String){
         withContext(Dispatchers.IO){
             val weatherList = MotiNetwork.motiService.getForecastWeather(city, unit).await()
@@ -31,6 +29,10 @@ class WeatherRepository(private val database: WeatherDatabase) {
         }
     }
 
+    /**
+     *  Marrim qytetin nga DB me func getWeatherByCityId nga Room , dhe e transformojme nga WeatherEntity ne DomainModel(Model i cili perdoret branda appit)
+     *  Per me shume rreth DomainModel referohu tek domainModeli
+     */
     val weatherList: LiveData<WeatherForecastModel> = Transformations.map(database.WeatherDao.getWeatherByCityId("Prizren")){
         it.asDomainModel()
     }

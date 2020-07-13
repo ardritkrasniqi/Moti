@@ -35,6 +35,8 @@ abstract class WeatherDatabase : RoomDatabase() {
 so only one instance of it should exist due to expensive and timeconsuming initializations
 Creates a function to initialize INSTANCE of database inside the synchriised block
 ip::::: the .isInitialized Kotlin property returns true if the lateinit property is assigned a value othervise it returns false
+
+ 2020 Ardrit Krasniqi
  */
 
 private lateinit var INSTANCE: WeatherDatabase

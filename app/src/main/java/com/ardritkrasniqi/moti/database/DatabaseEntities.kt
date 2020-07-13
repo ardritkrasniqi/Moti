@@ -48,6 +48,10 @@ data class Weather(
 )
 
 
+/**
+ * funksioni kthen entitetin ne DomainModel, te cilin me pas e perdorim brenda appit
+ */
+
 fun WeatherEntity.asDomainModel(): WeatherForecastModel {
     return WeatherForecastModel(
         CityModel(

@@ -13,8 +13,6 @@ import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.LineData
 import com.github.mikephil.charting.data.LineDataSet
 import kotlinx.coroutines.launch
-import retrofit2.HttpException
-import java.lang.Exception
 import java.util.*
 
 class TodayViewModel(application: Application) : AndroidViewModel(application) {
@@ -26,7 +24,7 @@ class TodayViewModel(application: Application) : AndroidViewModel(application) {
         get() = _status
 
 
-    // we get the weatherConditions from weatherConditions repository
+    // we get the weather from WeatherRepository repository
     private val weatherRepository = WeatherRepository(getDatabase(context))
     val weather = weatherRepository.weatherList
     val cityNames = weatherRepository.cityList
@@ -36,6 +34,8 @@ class TodayViewModel(application: Application) : AndroidViewModel(application) {
         refreshWeatherFromRepository()
     }
 
+    // Funksioni i cili thirret nga initi i viewmodelit per te marre motin e updatuar
+    // Ben thirrjen ne repository dhe i ben cache ne db
     private fun refreshWeatherFromRepository() {
         viewModelScope.launch {
             try {
@@ -120,6 +120,7 @@ class TodayViewModel(application: Application) : AndroidViewModel(application) {
 
     /**
      * Factory method to construct viewmodel with parameter( in this case the application parameter)
+     * paterna "factory" per te konstruktu viewmodelin me parameter ne kete rast na duhet konteksti i aplikactionit per te initilizu DB
      */
     class Factory(val app: Application) : ViewModelProvider.Factory {
         override fun <T : ViewModel?> create(modelClass: Class<T>): T {
