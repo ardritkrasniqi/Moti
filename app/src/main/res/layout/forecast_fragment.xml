@@ -1,0 +1,340 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.forecastFragment.ForecastFragment">
+
+    <TextView
+        android:id="@+id/city_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/roboto_condensed_regular"
+        android:text="Prishtine"
+        android:textSize="30sp"
+        android:textColor="#000"
+        android:layout_marginTop="15dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="Prizren" />
+
+
+    <TextView
+        android:id="@+id/weeklyChart_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:fontFamily="@font/roboto_condensed_regular"
+        android:text="Weekly Chart"
+        android:layout_marginTop="40dp"
+        android:textColor="#000"
+        android:textSize="25sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/city_name" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/firstConstraintLayout"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:paddingStart="20dp"
+        android:paddingEnd="20dp"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/weeklyChart_tv">
+
+        <ImageView
+            android:id="@+id/weatherCondition_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:paddingStart="0dp"
+            android:src="@drawable/ic_sunny"
+            android:tint="#000"
+            app:layout_constraintBottom_toBottomOf="@+id/dayOfWeek"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/dayOfWeek" />
+
+
+        <TextView
+            android:id="@+id/dayOfWeek"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:fontFamily="@font/roboto_condensed_regular"
+            android:text="Friday"
+            android:textColor="#000"
+            android:textSize="28sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toEndOf="@+id/weatherCondition_icon"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+        <TextView
+            android:id="@+id/currentTempTextForecast"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="20dp"
+            android:fontFamily="@font/roboto_condensed_regular"
+            android:text="31°"
+            android:textColor="#000"
+            android:textSize="28sp"
+            app:layout_constraintBaseline_toBaselineOf="@+id/dayOfWeek"
+            app:layout_constraintEnd_toStartOf="@+id/minTemp_tv" />
+
+
+        <TextView
+            android:id="@+id/additionalWindText"
+            style="@style/AdditionalInfoFieldsText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:text="Wind"
+            app:layout_constraintStart_toStartOf="@id/weatherCondition_icon"
+            app:layout_constraintTop_toBottomOf="@id/weatherCondition_icon" />
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="44dp"
+            android:text="12m/h"
+            app:layout_constraintBaseline_toBaselineOf="@+id/additionalWindText"
+            app:layout_constraintStart_toEndOf="@+id/additionalWindText" />
+
+        <TextView
+            android:id="@+id/additionalVisibilityText"
+            style="@style/AdditionalInfoFieldsText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="Visibility"
+            app:layout_constraintStart_toStartOf="@id/additionalWindText"
+            app:layout_constraintTop_toBottomOf="@id/additionalWindText" />
+
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="25km"
+            app:layout_constraintBaseline_toBaselineOf="@+id/additionalVisibilityText"
+            app:layout_constraintStart_toStartOf="@+id/textView" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guidelineAdditional"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginStart="200dp"
+            android:layout_marginEnd="200dp"
+            android:orientation="vertical"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintGuide_begin="183dp"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <TextView
+            android:id="@+id/forecastHumidityText"
+            style="@style/AdditionalInfoFieldsText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Humidity"
+            app:layout_constraintStart_toStartOf="@id/guidelineAdditional"
+            app:layout_constraintTop_toTopOf="@+id/additionalWindText" />
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="55%"
+            app:layout_constraintBaseline_toBaselineOf="@+id/forecastHumidityText"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@+id/textView5" />
+
+        <TextView
+            android:id="@+id/additionalUVText"
+            style="@style/AdditionalInfoFieldsText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="UV"
+            app:layout_constraintStart_toStartOf="@id/guidelineAdditional"
+            app:layout_constraintTop_toTopOf="@+id/additionalVisibilityText" />
+
+        <TextView
+            android:id="@+id/textView5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="2"
+            app:layout_constraintBaseline_toBaselineOf="@+id/additionalUVText"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.628"
+            app:layout_constraintStart_toEndOf="@+id/additionalUVText" />
+
+        <TextView
+            android:id="@+id/minTemp_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/roboto_condensed_regular"
+            android:text="12°"
+            android:textSize="28sp"
+            app:layout_constraintBottom_toBottomOf="@+id/currentTempTextForecast"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/currentTempTextForecast" />
+
+        <TextView
+            android:id="@+id/temperatureSeparator"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="/"
+            app:layout_constraintBottom_toBottomOf="@+id/currentTempTextForecast"
+            app:layout_constraintEnd_toStartOf="@+id/minTemp_tv"
+            app:layout_constraintStart_toEndOf="@+id/currentTempTextForecast"
+            app:layout_constraintTop_toTopOf="@+id/currentTempTextForecast" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="40dp"
+        android:background="#fff"
+        android:padding="20dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@id/firstConstraintLayout"
+        app:layout_constraintStart_toStartOf="@id/firstConstraintLayout"
+        app:layout_constraintTop_toBottomOf="@id/firstConstraintLayout">
+
+        <TextView
+            android:id="@+id/firstHourlyForecast"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/roboto_condensed_regular"
+            android:text="9:00"
+            android:textColor="#000"
+            android:textSize="15sp"
+            app:layout_constraintBaseline_toBaselineOf="@+id/firstWeatherCondition_tv"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <TextView
+            android:id="@+id/firstWeatherCondition_tv"
+            style="@style/ThreeHoursForecast"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="60dp"
+            android:text="Cloudy"
+            app:layout_constraintStart_toEndOf="@id/firstHourlyForecast"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/firstForecastTemp"
+            style="@style/ThreeHoursForecastTemp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="32°"
+            app:layout_constraintBottom_toBottomOf="@id/firstWeatherCondition_tv"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/firstWeatherCondition_tv" />
+
+        <TextView
+            android:id="@+id/secondHourlyForecast"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/roboto_condensed_regular"
+            android:text="12:00"
+            android:textColor="#000"
+            android:textSize="15sp"
+            app:layout_constraintBaseline_toBaselineOf="@+id/secondWeatherCondition_tv"
+            app:layout_constraintEnd_toEndOf="@+id/firstHourlyForecast"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/firstHourlyForecast" />
+
+        <TextView
+            android:id="@+id/secondWeatherCondition_tv"
+            style="@style/ThreeHoursForecast"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="40dp"
+            android:text="Partly Cloudy"
+            app:layout_constraintStart_toStartOf="@+id/firstWeatherCondition_tv"
+            app:layout_constraintTop_toBottomOf="@id/firstWeatherCondition_tv" />
+
+        <TextView
+            android:id="@+id/secondForecastTemp"
+            style="@style/ThreeHoursForecastTemp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="15°"
+            app:layout_constraintBottom_toBottomOf="@id/secondWeatherCondition_tv"
+            app:layout_constraintEnd_toEndOf="@+id/firstForecastTemp"
+            app:layout_constraintTop_toTopOf="@id/secondWeatherCondition_tv" />
+
+
+        <TextView
+            android:id="@+id/thirdHourlyForecast"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/roboto_condensed_regular"
+            android:text="22:00"
+            android:textColor="#000"
+            android:textSize="15sp"
+            app:layout_constraintBaseline_toBaselineOf="@+id/thirdWeatherCondition_tv"
+            app:layout_constraintEnd_toEndOf="@+id/secondHourlyForecast"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <TextView
+            android:id="@+id/thirdWeatherCondition_tv"
+            style="@style/ThreeHoursForecast"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="40dp"
+            android:text="Rain"
+            app:layout_constraintStart_toStartOf="@+id/secondWeatherCondition_tv"
+            app:layout_constraintTop_toBottomOf="@id/secondWeatherCondition_tv" />
+
+        <TextView
+            android:id="@+id/thirdForecastTemp"
+            style="@style/ThreeHoursForecastTemp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="7°"
+            app:layout_constraintBottom_toBottomOf="@id/thirdWeatherCondition_tv"
+            app:layout_constraintEnd_toEndOf="@+id/secondForecastTemp"
+            app:layout_constraintTop_toTopOf="@id/thirdWeatherCondition_tv" />
+
+        <ImageView
+            android:id="@+id/weatherPreviewIcon1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="10dp"
+            android:src="@drawable/ic_cloudy"
+            app:layout_constraintBottom_toBottomOf="@+id/firstWeatherCondition_tv"
+            app:layout_constraintEnd_toStartOf="@+id/firstWeatherCondition_tv"
+            app:layout_constraintTop_toTopOf="@+id/firstWeatherCondition_tv" />
+
+        <ImageView
+            android:id="@+id/weatherPreviewIcon2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="10dp"
+            android:src="@drawable/ic_005_cloudy_day_1"
+            app:layout_constraintBottom_toBottomOf="@+id/secondWeatherCondition_tv"
+            app:layout_constraintEnd_toStartOf="@+id/secondWeatherCondition_tv"
+            app:layout_constraintTop_toTopOf="@+id/secondWeatherCondition_tv" />
+
+        <ImageView
+            android:id="@+id/weatherPreviewIcon3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="10dp"
+            android:src="@drawable/ic_rain"
+            android:tint="@color/blackColor"
+            app:layout_constraintBottom_toBottomOf="@+id/thirdWeatherCondition_tv"
+            app:layout_constraintEnd_toStartOf="@+id/thirdWeatherCondition_tv"
+            app:layout_constraintTop_toTopOf="@+id/thirdWeatherCondition_tv" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

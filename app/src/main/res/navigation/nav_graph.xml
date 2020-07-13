@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/todayFragment">
+
+    <fragment
+        android:id="@+id/todayFragment"
+        android:name="com.ardritkrasniqi.moti.ui.todayFragment.TodayFragment"
+        android:label="today_fragment"
+        tools:layout="@layout/today_fragment" >
+        <action
+            android:id="@+id/action_todayFragment_to_forecastFragment"
+            app:destination="@id/forecastFragment" />
+        <action
+            android:id="@+id/action_todayFragment_to_settingsFragment"
+            app:destination="@id/settingsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/forecastFragment"
+        android:name="com.ardritkrasniqi.moti.ui.forecastFragment.ForecastFragment"
+        android:label="forecast_fragment"
+        tools:layout="@layout/forecast_fragment" />
+    <fragment
+        android:id="@+id/settingsFragment"
+        android:name="com.ardritkrasniqi.moti.ui.settingsFragment.SettingsFragment"
+        android:label="settings_fragment"
+        tools:layout="@layout/settings_fragment" />
+</navigation>

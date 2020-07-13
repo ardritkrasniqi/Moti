@@ -1,0 +1,358 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.ardritkrasniqi.moti.ui.todayFragment.TodayViewModel" />
+
+    </data>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/whiteColor">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#ffffff"
+        tools:context=".ui.todayFragment.TodayFragment">
+
+        <ImageView
+            android:id="@+id/weatherConditionIcon"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="20dp"
+            android:src="@drawable/ic_sunny_colored"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_company"
+            app:layout_constraintTop_toTopOf="@id/weatherConditionIcon"
+            app:layout_constraintBottom_toBottomOf="@id/weatherConditionIcon"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:clickable="true"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:layout_marginEnd="38dp"
+            android:id="@+id/selectCity"/>
+
+        <TextView
+            android:id="@+id/weatherDescription"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="7dp"
+            android:text="@{viewModel.weather.weatherList.get(0).description}"
+            android:fontFamily="@font/roboto_condensed_regular"
+            android:textSize="19sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/weatherConditionIcon"
+            tools:text="Partly cloudy" />
+
+        <TextView
+            android:id="@+id/currentTempText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="44dp"
+            android:fontFamily="@font/roboto_condensed_bold"
+            android:text="@{String.valueOf(viewModel.weather.weatherList.get(0).temp + `°`)}"
+            android:textColor="#000"
+            android:textSize="70sp"
+            app:layout_constraintEnd_toEndOf="@+id/weatherConditionIcon"
+            app:layout_constraintHorizontal_bias="0.512"
+            app:layout_constraintStart_toStartOf="@+id/weatherConditionIcon"
+            app:layout_constraintTop_toBottomOf="@+id/weatherConditionIcon"
+            tools:text="33" />
+
+
+        <TextView
+            android:id="@+id/currentCity"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:fontFamily="@font/roboto_condensed_regular"
+            android:text="@{viewModel.weather.city.name + `, ` + viewModel.weather.city.country}"
+            android:textColor="#E4000000"
+            android:textSize="22sp"
+            app:layout_constraintEnd_toEndOf="@+id/currentTempText"
+            app:layout_constraintHorizontal_bias="0.514"
+            app:layout_constraintStart_toStartOf="@+id/currentTempText"
+            app:layout_constraintTop_toBottomOf="@+id/currentTempText"
+            tools:text="Prizren,XK" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:fontFamily="@font/roboto_condensed_light"
+            android:text="Today"
+            app:layout_constraintBottom_toTopOf="@+id/card2"
+            app:layout_constraintEnd_toEndOf="@+id/currentCity"
+            app:layout_constraintStart_toStartOf="@+id/currentCity" />
+
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/card1"
+            style="@style/tempCardStyle"
+            android:layout_width="90dp"
+            android:layout_height="160dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="50dp"
+            app:layout_constraintEnd_toStartOf="@+id/card2"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/currentCity">
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/ic_card1"
+                android:orientation="vertical">
+
+                <TextView
+                    style="@style/cardTextStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="15dp"
+                    android:fontFamily="@font/roboto_condensed_regular"
+                    android:gravity="center"
+                    android:text="@{viewModel.weather.weatherList.get(1).dateText.substring(11,16)}" />
+
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="37dp"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="28dp"
+                    android:src="@drawable/ic_sunny" />
+
+                <TextView
+                    style="@style/cardTextStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="20dp"
+                    android:fontFamily="@font/roboto_condensed_regular"
+                    android:gravity="center"
+                    android:text="@{String.valueOf(viewModel.weather.weatherList.get(1).temp + `°`)}" />
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/card2"
+            style="@style/tempCardStyle"
+            android:layout_width="90dp"
+            android:layout_height="160dp"
+            app:layout_constraintBottom_toBottomOf="@+id/card1"
+            app:layout_constraintEnd_toStartOf="@+id/card3"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/card1">
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/ic_card2"
+                android:orientation="vertical">
+
+                <TextView
+                    style="@style/cardTextStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="15dp"
+                    android:fontFamily="@font/roboto_condensed_regular"
+                    android:gravity="center"
+                    android:text="@{viewModel.weather.weatherList.get(2).dateText.substring(11,16)}" />
+
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="37dp"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="28dp"
+                    android:src="@drawable/ic_rain" />
+
+                <TextView
+                    style="@style/cardTextStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="20dp"
+                    android:fontFamily="@font/roboto_condensed_regular"
+                    android:gravity="center"
+                    android:text="@{String.valueOf(viewModel.weather.weatherList.get(2).temp + `°`)}" />
+            </LinearLayout>
+
+
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/card3"
+            style="@style/tempCardStyle"
+            android:layout_width="90dp"
+            android:layout_height="160dp"
+            android:layout_marginEnd="24dp"
+            app:layout_constraintBottom_toBottomOf="@+id/card2"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/card2">
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/ic_card3"
+                android:orientation="vertical">
+
+                <TextView
+                    style="@style/cardTextStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="15dp"
+                    android:fontFamily="@font/roboto_condensed_regular"
+                    android:gravity="center"
+                    android:text="@{viewModel.weather.weatherList.get(3).dateText.substring(11,16)}" />
+
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="37dp"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="28dp"
+                    android:src="@drawable/ic_moon" />
+
+                <TextView
+                    style="@style/cardTextStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="20dp"
+                    android:fontFamily="@font/roboto_condensed_regular"
+                    android:gravity="center"
+                    android:text="@{String.valueOf(viewModel.weather.weatherList.get(3).temp + `°`)}" />
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+
+        <TextView
+            android:id="@+id/additionalInfo_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:fontFamily="@font/roboto_condensed_regular"
+            android:text="Additional Info"
+            android:textColor="#000"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="@id/card1"
+            app:layout_constraintTop_toBottomOf="@id/card1" />
+
+
+        <TextView
+            android:id="@+id/additionalWindText"
+            style="@style/AdditionalInfoFieldsText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="Wind"
+            app:layout_constraintStart_toStartOf="@id/additionalInfo_text"
+            app:layout_constraintTop_toBottomOf="@id/additionalInfo_text" />
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="44dp"
+            android:text="@{viewModel.weather.weatherList.get(0).windSpeed.toString() + ` km/h`}"
+            app:layout_constraintBaseline_toBaselineOf="@+id/additionalWindText"
+            app:layout_constraintStart_toEndOf="@+id/additionalWindText" />
+
+        <TextView
+            android:id="@+id/additionalVisibilityText"
+            style="@style/AdditionalInfoFieldsText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="Visibility"
+            app:layout_constraintStart_toStartOf="@id/additionalWindText"
+            app:layout_constraintTop_toBottomOf="@id/additionalWindText" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="25km"
+            app:layout_constraintBaseline_toBaselineOf="@+id/additionalVisibilityText"
+            app:layout_constraintStart_toStartOf="@+id/textView" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guidelineAdditional"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintGuide_begin="205dp"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <TextView
+            android:id="@+id/additionalHumidityText"
+            style="@style/AdditionalInfoFieldsText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Humidity"
+            app:layout_constraintStart_toStartOf="@id/guidelineAdditional"
+            app:layout_constraintTop_toTopOf="@+id/additionalWindText" />
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="40dp"
+            android:text="@{String.valueOf(viewModel.weather.weatherList.get(0).humidity + `%`)}"
+            app:layout_constraintBaseline_toBaselineOf="@+id/additionalHumidityText"
+            app:layout_constraintEnd_toEndOf="@+id/card3"
+            app:layout_constraintStart_toEndOf="@+id/additionalHumidityText" />
+
+        <TextView
+            android:id="@+id/additionalUVText"
+            style="@style/AdditionalInfoFieldsText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/roboto_condensed_regular"
+            android:text="Pressure"
+            app:layout_constraintStart_toStartOf="@id/guidelineAdditional"
+            app:layout_constraintTop_toTopOf="@+id/additionalVisibilityText" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{String.valueOf(viewModel.weather.weatherList.get(0).pressure)}"
+            app:layout_constraintBaseline_toBaselineOf="@+id/additionalUVText"
+            app:layout_constraintStart_toStartOf="@+id/textView2" />
+
+        <com.github.mikephil.charting.charts.LineChart
+            android:id="@+id/tempChart"
+            android:layout_width="0dp"
+            android:layout_height="130dp"
+            android:layout_marginTop="30dp"
+            app:layout_constraintEnd_toEndOf="@+id/card3"
+            app:layout_constraintStart_toStartOf="@+id/card1"
+            app:layout_constraintTop_toBottomOf="@id/additionalVisibilityText" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+</layout>
