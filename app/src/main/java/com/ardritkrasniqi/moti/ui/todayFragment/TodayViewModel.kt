@@ -38,7 +38,7 @@ class TodayViewModel(application: Application) : AndroidViewModel(application) {
     private fun refreshWeatherFromRepository() {
         viewModelScope.launch {
             try {
-                weatherRepository.refreshWeather("Tirana", "metric")
+                weatherRepository.refreshWeather("Pristina", "metric")
             } catch (error: Exception) {
                 _status.value = "Error: ${error.localizedMessage}"
             }

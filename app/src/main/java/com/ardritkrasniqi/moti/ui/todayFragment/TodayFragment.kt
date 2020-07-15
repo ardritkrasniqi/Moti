@@ -9,19 +9,28 @@ import android.hardware.SensorEventListener
 import android.hardware.SensorManager
 import android.hardware.SensorManager.SENSOR_DELAY_GAME
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.Animation.RELATIVE_TO_SELF
 import android.view.animation.RotateAnimation
-import android.widget.ImageView
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.NavController
+import androidx.navigation.findNavController
+import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.fragment.findNavController
+import com.ardritkrasniqi.moti.MainActivity
 import com.ardritkrasniqi.moti.R
 import com.ardritkrasniqi.moti.databinding.TodayFragmentBinding
+import com.ardritkrasniqi.moti.ui.mainFragment.MainFragment
 import com.github.mikephil.charting.charts.LineChart
 import com.github.mikephil.charting.data.LineData
+import com.google.android.material.navigation.NavigationView
+import kotlinx.android.synthetic.main.main_fragment.*
 import java.lang.Math.toDegrees
 
 /*
@@ -82,10 +91,15 @@ class TodayFragment : Fragment(), SensorEventListener {
             lineData,
             ContextCompat.getColor(requireContext(), R.color.whiteColor)
         )
-
         tempChart = binding.tempChart
+
+        binding.selectCity.setOnClickListener {
+            findNavController().navigate(R.id.action_mainFragment_to_cities)
+        }
+
         return binding.root
     }
+
 
 
     override fun onAccuracyChanged(sensor: Sensor?, accuracy: Int) {

@@ -22,5 +22,4 @@ class ViewPagerAdapter(fragment: FragmentManager, lifecycle: Lifecycle) :
             else -> SettingsFragment()
         }
     }
-
 }
