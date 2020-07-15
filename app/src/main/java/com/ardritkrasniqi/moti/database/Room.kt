@@ -23,7 +23,7 @@ interface WeatherDao {
 
 @Database(
     entities = [WeatherEntity::class],
-    version = 4, exportSchema = false
+    version = 5, exportSchema = false
 )
 @TypeConverters(value = [WeatherConverter::class])
 abstract class WeatherDatabase : RoomDatabase() {
@@ -31,7 +31,7 @@ abstract class WeatherDatabase : RoomDatabase() {
 }
 
 /**
- * Creates a lateinit variable called Instance to hold the singleton object, The videos database should be singleton
+ * Creates a lateinit variable called Instance to hold the singleton object, The weather database should be singleton
 so only one instance of it should exist due to expensive and timeconsuming initializations
 Creates a function to initialize INSTANCE of database inside the synchriised block
 ip::::: the .isInitialized Kotlin property returns true if the lateinit property is assigned a value othervise it returns false
@@ -47,7 +47,7 @@ fun getDatabase(context: Context): WeatherDatabase {
             INSTANCE = Room.databaseBuilder(
                 context.applicationContext,
                 WeatherDatabase::class.java,
-                "weatherAll").build()
+                "weatherAll").fallbackToDestructiveMigration().build()
         }
     }
     return INSTANCE

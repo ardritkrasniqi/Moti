@@ -23,23 +23,22 @@ class TodayViewModel(application: Application) : AndroidViewModel(application) {
     val status: LiveData<String>
         get() = _status
 
-
     // we get the weather from WeatherRepository repository
     private val weatherRepository = WeatherRepository(getDatabase(context))
     val weather = weatherRepository.weatherList
     val cityNames = weatherRepository.cityList
 
-
     init {
         refreshWeatherFromRepository()
     }
+
 
     // Funksioni i cili thirret nga initi i viewmodelit per te marre motin e updatuar
     // Ben thirrjen ne repository dhe i ben cache ne db
     private fun refreshWeatherFromRepository() {
         viewModelScope.launch {
             try {
-                weatherRepository.refreshWeather("Prizren", "metric")
+                weatherRepository.refreshWeather("Tirana", "metric")
             } catch (error: Exception) {
                 _status.value = "Error: ${error.localizedMessage}"
             }

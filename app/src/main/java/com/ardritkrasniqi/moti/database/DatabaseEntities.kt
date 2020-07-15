@@ -11,19 +11,19 @@ import kotlin.math.roundToInt
 data class WeatherEntity constructor(
     @PrimaryKey
     @ColumnInfo(name = "id")
-    val id: Long,
+    val id: Long?,
     @ColumnInfo(name = "name")
-    val name: String,
+    val name: String?,
     @ColumnInfo(name = "country")
-    val country: String,
+    val country: String?,
     @ColumnInfo(name = "population")
-    val population: Int,
+    val population: Int?,
     @ColumnInfo(name = "sunrise")
-    val sunrise: Int,
+    val sunrise: Int?,
     @ColumnInfo(name = "sunset")
-    val sunset: Int,
+    val sunset: Int?,
     @ColumnInfo(name = "list")
-    val weather: List<Weather>
+    val weather: List<Weather>?
 )
 
 
@@ -62,7 +62,7 @@ fun WeatherEntity.asDomainModel(): WeatherForecastModel {
             sunset = this.sunset,
             id = this.id
         ),
-        weatherList = weather.map {
+        weatherList = weather?.map {
             WeatherModel(
                 feelsLike = it.feelsLike?.roundToInt(),
                 humidity = it.humidity,

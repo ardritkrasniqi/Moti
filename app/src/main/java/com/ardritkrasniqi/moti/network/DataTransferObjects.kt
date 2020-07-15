@@ -16,14 +16,14 @@ data class WeatherList(
 
 @JsonClass(generateAdapter = true)
 data class City(
-    val country: String,
+    val country: String?,
     @Json(name = "id")
-    val id: Long,
-    val name: String,
-    val population: Int,
-    val sunrise: Int,
-    val sunset: Int,
-    val timezone: Int
+    val id: Long?,
+    val name: String?,
+    val population: Int?,
+    val sunrise: Int?,
+    val sunset: Int?,
+    val timezone: Int?
 )
 @JsonClass(generateAdapter = true)
 @Json(name = "main")
