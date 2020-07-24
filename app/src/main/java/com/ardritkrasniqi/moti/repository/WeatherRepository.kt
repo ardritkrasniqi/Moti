@@ -22,8 +22,8 @@ class WeatherRepository(private val database: WeatherDatabase) {
      *
      */
 
-    suspend fun refreshWeather(city: String, unit: String){
-        withContext(Dispatchers.IO){
+    suspend fun refreshWeather(city: String, unit: String) {
+        withContext(Dispatchers.IO) {
             val weatherList = MotiNetwork.motiService.getForecastWeather(city, unit).await()
             database.WeatherDao.insertWeather(weatherList.asDatabaseModel())
         }
@@ -33,9 +33,15 @@ class WeatherRepository(private val database: WeatherDatabase) {
      *  Marrim qytetin nga DB me func getWeatherByCityId nga Room , dhe e transformojme nga WeatherEntity ne DomainModel(Model i cili perdoret branda appit)
      *  Per me shume rreth DomainModel referohu tek domainModeli
      */
-    val weatherList: LiveData<WeatherForecastModel> = Transformations.map(database.WeatherDao.getWeather()){
-        it.asDomainModel()
-    }
+    val weatherList: LiveData<WeatherForecastModel> =
+        Transformations.map(database.WeatherDao.getWeather()) {
+            it.asDomainModel()
+        }
     val cityList: LiveData<List<String>> = database.WeatherDao.getCityNames()
+    // I transform a liveData as List to another LiveData<List>
+    private val weatherListAllAsDatabase = database.WeatherDao.getWeatherList()
+    val weatherListAllAsDomain: LiveData<List<WeatherForecastModel>> =
+        Transformations.map(weatherListAllAsDatabase)
+        {it -> it.map { it.asDomainModel() }}
 
 }

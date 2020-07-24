@@ -8,8 +8,11 @@ import androidx.room.TypeConverters
 @Dao
 interface WeatherDao {
 
-    @Query("select * from weatherentity")
+    @Query("select * from WeatherEntity ORDER BY weatherId ASC")
     fun getWeather(): LiveData<WeatherEntity>
+
+    @Query("select * from weatherentity")
+    fun getWeatherList(): LiveData<List<WeatherEntity>>
 
     @Query("select * from weatherentity where name=:cityName")
     fun getWeatherByCityId(cityName: String): LiveData<WeatherEntity>
@@ -23,7 +26,7 @@ interface WeatherDao {
 
 @Database(
     entities = [WeatherEntity::class],
-    version = 5, exportSchema = false
+    version = 7, exportSchema = false
 )
 @TypeConverters(value = [WeatherConverter::class])
 abstract class WeatherDatabase : RoomDatabase() {

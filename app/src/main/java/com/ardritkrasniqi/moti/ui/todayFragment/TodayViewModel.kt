@@ -3,10 +3,12 @@ package com.ardritkrasniqi.moti.ui.todayFragment
 import android.app.Application
 import android.content.Context
 import android.graphics.Color
+import android.util.Log
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.*
 import com.ardritkrasniqi.moti.R
 import com.ardritkrasniqi.moti.database.getDatabase
+import com.ardritkrasniqi.moti.domain.WeatherForecastModel
 import com.ardritkrasniqi.moti.repository.WeatherRepository
 import com.github.mikephil.charting.charts.LineChart
 import com.github.mikephil.charting.data.Entry
@@ -27,6 +29,8 @@ class TodayViewModel(application: Application) : AndroidViewModel(application) {
     private val weatherRepository = WeatherRepository(getDatabase(context))
     val weather = weatherRepository.weatherList
     val cityNames = weatherRepository.cityList
+    val weatherList = weatherRepository.weatherListAllAsDomain
+
 
     init {
         refreshWeatherFromRepository()

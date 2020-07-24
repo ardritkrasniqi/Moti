@@ -16,8 +16,10 @@ import android.view.ViewGroup
 import android.view.animation.Animation.RELATIVE_TO_SELF
 import android.view.animation.RotateAnimation
 import androidx.core.content.ContextCompat
+import androidx.core.util.rangeTo
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
@@ -78,6 +80,23 @@ class TodayFragment : Fragment(), SensorEventListener {
         // Giving the binding access to the viewmodel
         // I jep akces bindit qe te perdore viewmodelin
         binding.viewModel = viewModel
+
+        viewModel.weather.observe(viewLifecycleOwner, Observer {
+            binding.weatherConditionIcon.setImageResource(
+                when(viewModel.weather.value?.weatherList?.get(0)?.weatherId){
+                    200,299 -> R.drawable.ic_thunderstorm_colored
+                    300,399 -> R.drawable.ic_drizzle_colored_3xx
+                    500, 599 -> R.drawable.ic_lightrain_colored
+                    600, 699 -> R.drawable.ic_snow_colored
+                    700, 799 -> R.drawable.ic_cloud_mist_7xx
+                    800 -> R.drawable.ic_sunny_colored
+                    801,802 -> R.drawable.ic_fewclouds_colored_801
+                    803, 900 -> R.drawable.ic_moreclouds_colored
+                    else -> R.drawable.ic_sunny_colored
+                }
+            )
+        })
+
 
         // instantiating sensors
         sensorManager = (requireActivity().getSystemService(SENSOR_SERVICE) as SensorManager?)!!

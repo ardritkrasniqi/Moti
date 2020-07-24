@@ -4,6 +4,7 @@ import androidx.room.*
 import com.ardritkrasniqi.moti.domain.CityModel
 import com.ardritkrasniqi.moti.domain.WeatherForecastModel
 import com.ardritkrasniqi.moti.domain.WeatherModel
+import java.util.*
 import kotlin.math.roundToInt
 
 
@@ -22,6 +23,7 @@ data class WeatherEntity constructor(
     val sunrise: Int?,
     @ColumnInfo(name = "sunset")
     val sunset: Int?,
+    val weatherId: UUID = UUID.randomUUID(),
     @ColumnInfo(name = "list")
     val weather: List<Weather>?
 )
@@ -55,12 +57,12 @@ data class Weather(
 fun WeatherEntity.asDomainModel(): WeatherForecastModel {
     return WeatherForecastModel(
         CityModel(
-            country = this.country,
-            name = this.name,
-            population = this.population,
-            sunrise = this.sunrise,
-            sunset = this.sunset,
-            id = this.id
+            country = country,
+            name = name,
+            population = population,
+            sunrise = sunrise,
+            sunset = sunset,
+            id = id
         ),
         weatherList = weather?.map {
             WeatherModel(
@@ -78,7 +80,8 @@ fun WeatherEntity.asDomainModel(): WeatherForecastModel {
                 dateText = it.dateText,
                 description = it.weatherDescription,
                 icon = it.icon,
-                main = it.main
+                main = it.main,
+                weatherId = it.weatherId
             )
         }
     )

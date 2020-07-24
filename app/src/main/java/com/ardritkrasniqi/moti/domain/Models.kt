@@ -1,7 +1,5 @@
 package com.ardritkrasniqi.moti.domain
 
-import java.util.*
-
 
 data class WeatherForecastModel(
     val city: CityModel,
@@ -27,6 +25,7 @@ data class WeatherModel(
     val tempMax: Int? = -1,
     val tempMin: Int? = -1,
     val dateUnix: Long? = -1,
+    val weatherId: Int? = -1,
     val cloudsPercentage: Int? = -1,
     val windSpeed: Int? = -1,
     val windDegree: Int? = -1,
