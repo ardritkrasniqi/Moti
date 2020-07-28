@@ -3,7 +3,6 @@ package com.ardritkrasniqi.moti.ui.todayFragment
 import android.app.Application
 import android.content.Context
 import android.graphics.Color
-import android.util.Log
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.*
 import com.ardritkrasniqi.moti.R
@@ -25,24 +24,30 @@ class TodayViewModel(application: Application) : AndroidViewModel(application) {
     val status: LiveData<String>
         get() = _status
 
+
     // we get the weather from WeatherRepository repository
     private val weatherRepository = WeatherRepository(getDatabase(context))
-    val weather = weatherRepository.weatherList
-    val cityNames = weatherRepository.cityList
+    var weather = weatherRepository.weatherList
     val weatherList = weatherRepository.weatherListAllAsDomain
 
 
     init {
-        refreshWeatherFromRepository()
+        refreshWeatherFromRepository("Prizren")
+    }
+
+    fun getWeather(city:String): LiveData<WeatherForecastModel>{
+        refreshWeatherFromRepository(city)
+        weather = weatherRepository.getCity(city)
+        return weather
     }
 
 
     // Funksioni i cili thirret nga initi i viewmodelit per te marre motin e updatuar
     // Ben thirrjen ne repository dhe i ben cache ne db
-    private fun refreshWeatherFromRepository() {
+    private fun refreshWeatherFromRepository(city: String) {
         viewModelScope.launch {
             try {
-                weatherRepository.refreshWeather("Pristina", "metric")
+                weatherRepository.refreshWeather(city, "metric")
             } catch (error: Exception) {
                 _status.value = "Error: ${error.localizedMessage}"
             }

@@ -33,10 +33,18 @@ class WeatherRepository(private val database: WeatherDatabase) {
      *  Marrim qytetin nga DB me func getWeatherByCityId nga Room , dhe e transformojme nga WeatherEntity ne DomainModel(Model i cili perdoret branda appit)
      *  Per me shume rreth DomainModel referohu tek domainModeli
      */
-    val weatherList: LiveData<WeatherForecastModel> =
+    var weatherList: LiveData<WeatherForecastModel> =
         Transformations.map(database.WeatherDao.getWeather()) {
-            it.asDomainModel()
+            it?.asDomainModel()
         }
+
+    fun getCity(city: String): LiveData<WeatherForecastModel>{
+        weatherList = Transformations.map(database.WeatherDao.getWeatherByCityId(city)){
+            it?.asDomainModel()
+        }
+        return weatherList
+    }
+
     val cityList: LiveData<List<String>> = database.WeatherDao.getCityNames()
     // I transform a liveData as List to another LiveData<List>
     private val weatherListAllAsDatabase = database.WeatherDao.getWeatherList()

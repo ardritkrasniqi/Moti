@@ -11,11 +11,17 @@
         android:label="MainFragment" >
         <action
             android:id="@+id/action_mainFragment_to_cities"
-            app:destination="@id/cities" />
+            app:destination="@id/cities"
+            app:enterAnim="@anim/animation_top_up"
+            app:popExitAnim="@anim/animation_top_bottom" />
     </fragment>
     <fragment
         android:id="@+id/cities"
         android:name="com.ardritkrasniqi.moti.ui.citiesFragment.Cities"
         android:label="cities_fragment"
-        tools:layout="@layout/cities_fragment" />
+        tools:layout="@layout/cities_fragment" >
+        <action
+            android:id="@+id/action_cities_to_mainFragment"
+            app:destination="@id/mainFragment" />
+    </fragment>
 </navigation>

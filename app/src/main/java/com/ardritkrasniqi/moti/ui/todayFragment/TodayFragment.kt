@@ -21,6 +21,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.observe
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
@@ -80,7 +81,20 @@ class TodayFragment : Fragment(), SensorEventListener {
         // Giving the binding access to the viewmodel
         // I jep akces bindit qe te perdore viewmodelin
         binding.viewModel = viewModel
+        // instantiating sensors
+        sensorManager = (requireActivity().getSystemService(SENSOR_SERVICE) as SensorManager?)!!
+        accelerometer = sensorManager.getDefaultSensor(TYPE_ACCELEROMETER)
+        magnetometer = sensorManager.getDefaultSensor(TYPE_MAGNETIC_FIELD)
+        // instantiates lineData from viewModel
+        val lineData: LineData = viewModel.getData(5, 5f, requireContext())
+        viewModel.setupChart(
+            binding.tempChart,
+            lineData,
+            ContextCompat.getColor(requireContext(), R.color.whiteColor)
+        )
+        tempChart = binding.tempChart
 
+        // Sets the icon in weatherDescriptionIcon
         viewModel.weather.observe(viewLifecycleOwner, Observer {
             binding.weatherConditionIcon.setImageResource(
                 when(viewModel.weather.value?.weatherList?.get(0)?.weatherId){
@@ -98,24 +112,14 @@ class TodayFragment : Fragment(), SensorEventListener {
         })
 
 
-        // instantiating sensors
-        sensorManager = (requireActivity().getSystemService(SENSOR_SERVICE) as SensorManager?)!!
-        accelerometer = sensorManager.getDefaultSensor(TYPE_ACCELEROMETER)
-        magnetometer = sensorManager.getDefaultSensor(TYPE_MAGNETIC_FIELD)
-
-
-        val lineData: LineData = viewModel.getData(5, 5f, requireContext())
-        viewModel.setupChart(
-            binding.tempChart,
-            lineData,
-            ContextCompat.getColor(requireContext(), R.color.whiteColor)
-        )
-        tempChart = binding.tempChart
-
         binding.selectCity.setOnClickListener {
             findNavController().navigate(R.id.action_mainFragment_to_cities)
         }
 
+        findNavController().currentBackStackEntry?.savedStateHandle?.getLiveData<String>("key")?.observe(
+            viewLifecycleOwner) { result ->
+            viewModel.getWeather(result)
+        }
         return binding.root
     }
 

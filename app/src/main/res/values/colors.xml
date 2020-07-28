@@ -2,8 +2,9 @@
 <resources>
     <color name="colorPrimary">#6200EE</color>
     <color name="colorPrimaryDark">#3700B3</color>
-    <color name="colorAccent">#03DAC5</color>
+    <color name="colorAccent">#ffae3c</color>
     <color name="whiteColor">#ffffff</color>
     <color name="blackColor">#000000</color>
     <color name="violet">#795c8e</color>
+    <color name="orangePic">#ffae3c</color>
 </resources>

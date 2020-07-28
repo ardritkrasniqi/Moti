@@ -6,7 +6,7 @@
     <data>
         
         <variable
-            name="cityNameList"
+            name="cityNamee"
             type="String" />
         <variable
             name="temperature"
@@ -14,6 +14,9 @@
         <variable
             name="description"
             type="String" />
+        <variable
+            name="clickListener"
+            type="com.ardritkrasniqi.moti.ui.citiesFragment.OnClickListener" />
 
     </data>
 
@@ -25,14 +28,16 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:onClick="@{() -> clickListener.onClick(cityNamee)}">
 
-            <pl.droidsonroids.gif.GifImageView
+            <ImageView
                 android:id="@+id/gifImageView"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
-                android:scaleType="centerCrop"
-                android:src="@drawable/rainy_gif"
+                android:background="#ffae3c"
+                android:scaleType="fitCenter"
+                android:src="@drawable/sunny_pic"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -41,7 +46,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                cityNameItem="@{cityNameList}"
+                cityNameItem="@{cityNamee}"
                 android:layout_margin="10dp"
                 android:id="@+id/city_name"
                 android:textColor="#fff"
