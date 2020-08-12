@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "131242514493",
+    "firebase_url": "https://moti-75e74.firebaseio.com",
+    "project_id": "moti-75e74",
+    "storage_bucket": "moti-75e74.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:131242514493:android:41f7073e6c4c981208f254",
+        "android_client_info": {
+          "package_name": "com.ardritkrasniqi.moti"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "131242514493-885smuqs8r0uj85q9bbe7ebsa2hgllod.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDequ2XFabZ4ykBr-RYNAvpc0G5wSGI6vQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "131242514493-885smuqs8r0uj85q9bbe7ebsa2hgllod.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

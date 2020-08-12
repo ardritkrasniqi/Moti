@@ -17,11 +17,22 @@
     </fragment>
     <fragment
         android:id="@+id/cities"
-        android:name="com.ardritkrasniqi.moti.ui.citiesFragment.Cities"
+        android:name="com.ardritkrasniqi.moti.ui.selectAddedCities.Cities"
         android:label="cities_fragment"
         tools:layout="@layout/cities_fragment" >
         <action
             android:id="@+id/action_cities_to_mainFragment"
+            app:destination="@id/mainFragment" />
+        <action
+            android:id="@+id/action_cities_to_addNewCityFragment"
+            app:destination="@id/addNewCityFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/addNewCityFragment"
+        android:name="com.ardritkrasniqi.moti.ui.addNewCity.AddNewCityFragment"
+        android:label="AddNewCityFragment" >
+        <action
+            android:id="@+id/action_addNewCityFragment_to_mainFragment"
             app:destination="@id/mainFragment" />
     </fragment>
 </navigation>

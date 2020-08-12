@@ -1,4 +1,4 @@
-package com.ardritkrasniqi.moti.ui.citiesFragment
+package com.ardritkrasniqi.moti.ui.selectAddedCities
 
 import androidx.lifecycle.ViewModel
 

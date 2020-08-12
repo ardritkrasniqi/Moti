@@ -9,6 +9,7 @@ import com.ardritkrasniqi.moti.R
 import com.ardritkrasniqi.moti.database.getDatabase
 import com.ardritkrasniqi.moti.domain.WeatherForecastModel
 import com.ardritkrasniqi.moti.repository.WeatherRepository
+import com.ardritkrasniqi.moti.ui.MainActivity
 import com.github.mikephil.charting.charts.LineChart
 import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.LineData
@@ -30,10 +31,6 @@ class TodayViewModel(application: Application) : AndroidViewModel(application) {
     var weather = weatherRepository.weatherList
     val weatherList = weatherRepository.weatherListAllAsDomain
 
-
-    init {
-        refreshWeatherFromRepository("Prizren")
-    }
 
     fun getWeather(city:String): LiveData<WeatherForecastModel>{
         refreshWeatherFromRepository(city)

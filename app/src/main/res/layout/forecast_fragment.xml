@@ -196,12 +196,12 @@
 
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/threeHourForecast_constraint"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_marginTop="40dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
         android:background="#fff"
         android:padding="20dp"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@id/firstConstraintLayout"
         app:layout_constraintStart_toStartOf="@id/firstConstraintLayout"
         app:layout_constraintTop_toBottomOf="@id/firstConstraintLayout">
@@ -336,5 +336,19 @@
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerView"
+        android:layout_width="match_parent"
+        android:background="#0F9DD3FD"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/threeHourForecast_constraint"
+        tools:itemCount="5"
+        tools:listitem="@layout/weather_forecastlist_item" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -14,9 +14,18 @@
         <variable
             name="description"
             type="String" />
+
+        <variable
+            name="imageResource"
+            type="Integer" />
+
+        <variable
+            name="backgroundColor"
+            type="Integer" />
+
         <variable
             name="clickListener"
-            type="com.ardritkrasniqi.moti.ui.citiesFragment.OnClickListener" />
+            type="com.ardritkrasniqi.moti.ui.selectAddedCities.OnClickListener" />
 
     </data>
 
@@ -35,9 +44,9 @@
                 android:id="@+id/gifImageView"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
-                android:background="#ffae3c"
-                android:scaleType="fitCenter"
-                android:src="@drawable/sunny_pic"
+                backgroundColorBinding="@{backgroundColor}"
+                imageResource="@{imageResource}"
+                tools:src="@drawable/rainy_card"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"

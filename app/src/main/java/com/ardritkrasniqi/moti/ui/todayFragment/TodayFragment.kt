@@ -1,5 +1,7 @@
 package com.ardritkrasniqi.moti.ui.todayFragment
 
+import android.app.Activity
+import android.content.Context
 import android.content.Context.SENSOR_SERVICE
 import android.hardware.Sensor
 import android.hardware.Sensor.TYPE_ACCELEROMETER
@@ -8,33 +10,29 @@ import android.hardware.SensorEvent
 import android.hardware.SensorEventListener
 import android.hardware.SensorManager
 import android.hardware.SensorManager.SENSOR_DELAY_GAME
+import android.location.Geocoder
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.Animation.RELATIVE_TO_SELF
 import android.view.animation.RotateAnimation
+import android.view.inputmethod.InputMethodManager
 import androidx.core.content.ContextCompat
-import androidx.core.util.rangeTo
+import androidx.core.content.ContextCompat.getSystemService
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.observe
-import androidx.navigation.NavController
-import androidx.navigation.findNavController
-import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
-import com.ardritkrasniqi.moti.MainActivity
 import com.ardritkrasniqi.moti.R
+import com.ardritkrasniqi.moti.UtilityClasses.Constants
+import com.ardritkrasniqi.moti.UtilityClasses.PrefUtils
 import com.ardritkrasniqi.moti.databinding.TodayFragmentBinding
-import com.ardritkrasniqi.moti.ui.mainFragment.MainFragment
 import com.github.mikephil.charting.charts.LineChart
 import com.github.mikephil.charting.data.LineData
-import com.google.android.material.navigation.NavigationView
-import kotlinx.android.synthetic.main.main_fragment.*
 import java.lang.Math.toDegrees
+
 
 /*
 Brewed with love by Ardrit Krasniqi 2020
@@ -42,20 +40,23 @@ Brewed with love by Ardrit Krasniqi 2020
 
 class TodayFragment : Fragment(), SensorEventListener {
 
+    companion object {
+        fun newInstance() = TodayFragment()
+    }
+
     lateinit var binding: TodayFragmentBinding
     private lateinit var sensorManager: SensorManager
     private lateinit var accelerometer: Sensor
     private lateinit var magnetometer: Sensor
+    private lateinit var sharedPreff: PrefUtils
+    private lateinit var geoCoder: Geocoder
+    private lateinit var tempChart: LineChart
 
     var currentDegree = 0.0f
     var lastAccelerometer = FloatArray(3)
     var lastMagnetometer = FloatArray(3)
     var lastAccelerometerSet = false
     var lastMagnetometerSet = false
-
-    companion object {
-        fun newInstance() = TodayFragment()
-    }
 
 
     // viewmodeli initializohet me lazy qe do te thote kur te krijohet aktiviteti i cili e hoston fragmentin
@@ -67,13 +68,11 @@ class TodayFragment : Fragment(), SensorEventListener {
         ).get(TodayViewModel::class.java)
     }
 
-    private lateinit var tempChart: LineChart
-
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        sharedPreff = PrefUtils(requireContext(), Constants.SHAREDPREFF_NAME, Context.MODE_PRIVATE)
         binding = TodayFragmentBinding.inflate(inflater)
         // Allows Data Binding to Observe LiveData with the lifecycle of this Fragment
         // Lejon DataBinding qe te observoje liveDatan me (jeten) e ketij fragmneti
@@ -94,36 +93,41 @@ class TodayFragment : Fragment(), SensorEventListener {
         )
         tempChart = binding.tempChart
 
+        
+
+
         // Sets the icon in weatherDescriptionIcon
         viewModel.weather.observe(viewLifecycleOwner, Observer {
             binding.weatherConditionIcon.setImageResource(
-                when(viewModel.weather.value?.weatherList?.get(0)?.weatherId){
-                    200,299 -> R.drawable.ic_thunderstorm_colored
-                    300,399 -> R.drawable.ic_drizzle_colored_3xx
-                    500, 599 -> R.drawable.ic_lightrain_colored
-                    600, 699 -> R.drawable.ic_snow_colored
-                    700, 799 -> R.drawable.ic_cloud_mist_7xx
+                when (viewModel.weather.value?.weatherList?.get(0)?.weatherId) {
+                    in 200..299 -> R.drawable.ic_thunderstorm_colored
+                    in 300..399 -> R.drawable.ic_drizzle_colored_3xx
+                    in 500..599 -> R.drawable.ic_lightrain_colored
+                    in 600..699 -> R.drawable.ic_snow_colored
+                    in 700..799 -> R.drawable.ic_cloud_mist_7xx
                     800 -> R.drawable.ic_sunny_colored
-                    801,802 -> R.drawable.ic_fewclouds_colored_801
-                    803, 900 -> R.drawable.ic_moreclouds_colored
+                    in 801..802 -> R.drawable.ic_fewclouds_colored_801
+                    in 803..900 -> R.drawable.ic_moreclouds_colored
                     else -> R.drawable.ic_sunny_colored
                 }
             )
         })
 
 
+        // goes to slectCityFragment
         binding.selectCity.setOnClickListener {
             findNavController().navigate(R.id.action_mainFragment_to_cities)
         }
-
-        findNavController().currentBackStackEntry?.savedStateHandle?.getLiveData<String>("key")?.observe(
-            viewLifecycleOwner) { result ->
-            viewModel.getWeather(result)
-        }
+        // gets the cityName from selectCityFragment and uses in viewmodel for calls and room fetch
+        findNavController().currentBackStackEntry?.savedStateHandle?.getLiveData<String>("key")
+            ?.observe(
+                viewLifecycleOwner
+            ) { cityName ->
+                viewModel.getWeather(cityName)
+            }
+        sharedPreff.getString(Constants.SELECTED_CITY, "null")?.let { viewModel.getWeather(it) }
         return binding.root
     }
-
-
 
     override fun onAccuracyChanged(sensor: Sensor?, accuracy: Int) {
         //nuk na duhet

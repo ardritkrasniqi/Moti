@@ -7,4 +7,8 @@
     <color name="blackColor">#000000</color>
     <color name="violet">#795c8e</color>
     <color name="orangePic">#ffae3c</color>
+    <color name="rainyCardBackground">#8F9DE9</color>
+    <color name="sunnyCardBackground">#43c095</color>
+    <color name="cloudyCardBackGround">#FF5CD4FF</color>
+    <color name="snowyCardBackground">#59a3ff</color>
 </resources>
