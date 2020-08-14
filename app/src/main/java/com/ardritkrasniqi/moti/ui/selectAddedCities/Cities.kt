@@ -6,7 +6,6 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.NavigationUI
@@ -14,7 +13,8 @@ import com.ardritkrasniqi.moti.R
 import com.ardritkrasniqi.moti.UtilityClasses.Constants
 import com.ardritkrasniqi.moti.UtilityClasses.PrefUtils
 import com.ardritkrasniqi.moti.databinding.CitiesFragmentBinding
-import com.ardritkrasniqi.moti.ui.todayFragment.TodayViewModel
+import com.ardritkrasniqi.moti.ui.mainFragment.MainViewModel
+
 
 class Cities : Fragment() {
 
@@ -27,7 +27,7 @@ class Cities : Fragment() {
 
 
     private val viewModel by lazy {
-        ViewModelProvider(this).get(TodayViewModel::class.java)
+        ViewModelProvider(this).get(MainViewModel::class.java)
     }
 
     override fun onCreateView(

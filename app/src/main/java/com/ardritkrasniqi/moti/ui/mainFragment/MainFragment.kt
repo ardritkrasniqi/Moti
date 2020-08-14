@@ -1,10 +1,12 @@
 package com.ardritkrasniqi.moti.ui.mainFragment
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.viewpager2.widget.ViewPager2
 import com.ardritkrasniqi.moti.R
@@ -52,7 +54,6 @@ class MainFragment : Fragment() {
     ): View? {
         binding = MainFragmentBinding.inflate(inflater)
         viewPagerAdapter = ViewPagerAdapter(childFragmentManager, this.lifecycle)
-
         binding.apply {
             viewPager.adapter = viewPagerAdapter
             viewPager.registerOnPageChangeCallback(
@@ -63,6 +64,11 @@ class MainFragment : Fragment() {
                 }
             )
             bottomNav.setOnNavigationItemSelectedListener(onNavigationItemSelectedListener)
+
+            mainViewModel.weatherList.observe(viewLifecycleOwner, Observer {
+                Log.i("viewmodeli", mainViewModel.weatherList.value?.get(0)?.weatherList?.get(0).toString())
+            })
+
         }
         return binding.root
     }

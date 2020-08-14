@@ -29,6 +29,7 @@ import com.ardritkrasniqi.moti.R
 import com.ardritkrasniqi.moti.UtilityClasses.Constants
 import com.ardritkrasniqi.moti.UtilityClasses.PrefUtils
 import com.ardritkrasniqi.moti.databinding.TodayFragmentBinding
+import com.ardritkrasniqi.moti.ui.mainFragment.MainViewModel
 import com.github.mikephil.charting.charts.LineChart
 import com.github.mikephil.charting.data.LineData
 import java.lang.Math.toDegrees
@@ -60,12 +61,12 @@ class TodayFragment : Fragment(), SensorEventListener {
 
 
     // viewmodeli initializohet me lazy qe do te thote kur te krijohet aktiviteti i cili e hoston fragmentin
-    private val viewModel: TodayViewModel by lazy {
+    private val viewModel: MainViewModel by lazy {
         val activity = requireNotNull(this.activity) {}
         ViewModelProvider(
             this,
-            TodayViewModel.Factory(activity.application)
-        ).get(TodayViewModel::class.java)
+            MainViewModel.Factory(activity.application)
+        ).get(MainViewModel::class.java)
     }
 
     override fun onCreateView(
@@ -93,7 +94,7 @@ class TodayFragment : Fragment(), SensorEventListener {
         )
         tempChart = binding.tempChart
 
-        
+
 
 
         // Sets the icon in weatherDescriptionIcon

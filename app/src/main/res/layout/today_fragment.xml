@@ -8,11 +8,11 @@
 
         <variable
             name="viewModel"
-            type="com.ardritkrasniqi.moti.ui.todayFragment.TodayViewModel" />
+            type="com.ardritkrasniqi.moti.ui.mainFragment.MainViewModel" />
 
         <variable
             name="fragment"
-            type="com.ardritkrasniqi.moti.ui.todayFragment.TodayFragment" />
+            type="com.ardritkrasniqi.moti.ui.mainFragment.MainViewModel" />
 
     </data>
 
