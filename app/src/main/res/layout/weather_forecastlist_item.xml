@@ -36,7 +36,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/month_text"
             android:tint="@color/blackColor"
-            tools:src="@drawable/ic_moon_cloud" />
+            android:src="@drawable/ic_moon_cloud" />
 
         <TextView
             android:layout_width="wrap_content"

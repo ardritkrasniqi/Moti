@@ -5,6 +5,7 @@ import android.widget.TextView
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.ardritkrasniqi.moti.domain.WeatherForecastModel
+import com.ardritkrasniqi.moti.domain.WeatherModel
 import com.ardritkrasniqi.moti.network.CityData
 import com.ardritkrasniqi.moti.network.CityDataList
 import com.ardritkrasniqi.moti.ui.addNewCity.CityAdapter
@@ -45,21 +46,4 @@ fun addBackgroundResource(imageView: ImageView, colorResource: Int){
     imageView.setBackgroundResource(colorResource)
 }
 
-//@BindingAdapter("cityNamePrefix")
-//fun cityNamePrefix(textView: TextView, cityNamePrefix: String){
-//    textView.text = cityNamePrefix
-//}
-//
-//@BindingAdapter("countryNamePrefix")
-//fun countryNamePrefix(textView: TextView, countryNamePrefix: String){
-//    textView.text = countryNamePrefix
-//}
-//
-//@BindingAdapter("listDataAddCity")
-//fun RecyclerView.bindRecyclerViewPrefix(data: List<CityData>?) {
-//    data.let {
-//        val adapter = this.adapter as CityAdapter
-//        adapter.submitList(it)
-//    }
-//}
 

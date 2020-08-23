@@ -6,10 +6,13 @@ import android.graphics.Color
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.*
 import com.ardritkrasniqi.moti.R
+import com.ardritkrasniqi.moti.UtilityClasses.Constants
+import com.ardritkrasniqi.moti.UtilityClasses.HelperClass
+import com.ardritkrasniqi.moti.UtilityClasses.PrefUtils
 import com.ardritkrasniqi.moti.database.getDatabase
 import com.ardritkrasniqi.moti.domain.WeatherForecastModel
+import com.ardritkrasniqi.moti.domain.WeatherModel
 import com.ardritkrasniqi.moti.repository.WeatherRepository
-import com.ardritkrasniqi.moti.ui.MainActivity
 import com.github.mikephil.charting.charts.LineChart
 import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.LineData
@@ -20,10 +23,14 @@ import java.util.*
 class MainViewModel(application: Application) : AndroidViewModel(application) {
 
     private val context = getApplication<Application>().applicationContext
+    private val sharedPrefUtils = PrefUtils.with(context, Constants.SHAREDPREFF_NAME, Context.MODE_PRIVATE)
 
     private val _status = MutableLiveData<String>()
     val status: LiveData<String>
         get() = _status
+
+    var forecastDaysList = mutableListOf<String>()
+    var forecastWeatherModels =  MutableLiveData<MutableList<List<WeatherModel>?>>(mutableListOf())
 
 
     // we get the weather from WeatherRepository repository
@@ -32,11 +39,16 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
     val weatherList = weatherRepository.weatherListAllAsDomain
 
 
-    fun getWeather(city:String): LiveData<WeatherForecastModel>{
+    fun getWeather(city: String): LiveData<WeatherForecastModel> {
         refreshWeatherFromRepository(city)
         weather = weatherRepository.getCity(city)
         return weather
     }
+
+    init {
+        sharedPrefUtils.getString(Constants.SELECTED_CITY, "null")?.let { getWeather(it) }
+    }
+
 
 
     // Funksioni i cili thirret nga initi i viewmodelit per te marre motin e updatuar
@@ -48,6 +60,19 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
             } catch (error: Exception) {
                 _status.value = "Error: ${error.localizedMessage}"
             }
+        }
+    }
+
+
+    fun addedFiveDaysForecastDates() {
+        forecastDaysList = weather.value?.weatherList?.get(0)?.dateText?.let {
+            HelperClass.addFiveDaysForRecycler(it, 4)}!!
+    }
+
+    fun getFiveForecastDays() {
+        forecastWeatherModels.value = mutableListOf()
+        for (i in 0..4) {
+          forecastWeatherModels.value?.add(weather.value?.weatherList?.filter { it.dateText!!.contains(forecastDaysList[i])})
         }
     }
 

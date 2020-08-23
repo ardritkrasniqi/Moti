@@ -109,7 +109,7 @@ class TodayFragment : Fragment(), SensorEventListener {
                     800 -> R.drawable.ic_sunny_colored
                     in 801..802 -> R.drawable.ic_fewclouds_colored_801
                     in 803..900 -> R.drawable.ic_moreclouds_colored
-                    else -> R.drawable.ic_sunny_colored
+                    else -> R.drawable.ic_moon
                 }
             )
         })

@@ -3,8 +3,10 @@ package com.ardritkrasniqi.moti.repository
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Transformations
 import com.ardritkrasniqi.moti.database.WeatherDatabase
+import com.ardritkrasniqi.moti.database.WeatherEntity
 import com.ardritkrasniqi.moti.database.asDomainModel
 import com.ardritkrasniqi.moti.domain.WeatherForecastModel
+import com.ardritkrasniqi.moti.domain.WeatherModel
 import com.ardritkrasniqi.moti.network.GeoDbNetwork
 import com.ardritkrasniqi.moti.network.MotiNetwork
 import com.ardritkrasniqi.moti.network.asDatabaseModel
@@ -45,6 +47,7 @@ class WeatherRepository(private val database: WeatherDatabase) {
         }
         return weatherList
     }
+
 
     val cityList: LiveData<List<String>> = database.WeatherDao.getCityNames()
     // I transform a liveData as List to another LiveData<List>
