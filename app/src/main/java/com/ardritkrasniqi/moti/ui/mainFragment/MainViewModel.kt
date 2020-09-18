@@ -3,12 +3,12 @@ package com.ardritkrasniqi.moti.ui.mainFragment
 import android.app.Application
 import android.content.Context
 import android.graphics.Color
+import android.util.Log
 import androidx.core.content.ContextCompat
+import androidx.databinding.Bindable
 import androidx.lifecycle.*
 import com.ardritkrasniqi.moti.R
-import com.ardritkrasniqi.moti.UtilityClasses.Constants
 import com.ardritkrasniqi.moti.UtilityClasses.HelperClass
-import com.ardritkrasniqi.moti.UtilityClasses.PrefUtils
 import com.ardritkrasniqi.moti.database.getDatabase
 import com.ardritkrasniqi.moti.domain.WeatherForecastModel
 import com.ardritkrasniqi.moti.domain.WeatherModel
@@ -17,37 +17,61 @@ import com.github.mikephil.charting.charts.LineChart
 import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.LineData
 import com.github.mikephil.charting.data.LineDataSet
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.withContext
 import java.util.*
 
 class MainViewModel(application: Application) : AndroidViewModel(application) {
 
     private val context = getApplication<Application>().applicationContext
-    private val sharedPrefUtils = PrefUtils.with(context, Constants.SHAREDPREFF_NAME, Context.MODE_PRIVATE)
 
     private val _status = MutableLiveData<String>()
     val status: LiveData<String>
         get() = _status
 
     var forecastDaysList = mutableListOf<String>()
-    var forecastWeatherModels =  MutableLiveData<MutableList<List<WeatherModel>?>>(mutableListOf())
+    private var _forecastWeatherModels =
+        MutableLiveData<MutableList<List<WeatherModel>>>()
+    val forecastWeatherModels: MutableLiveData<MutableList<List<WeatherModel>>>
+        get() = _forecastWeatherModels
 
+    // variable for weather in forecastWeather, i use it to change the data according to wich date is selected
+    private var _forecastModel = MutableLiveData<List<WeatherModel>>()
+    val forecastModel: LiveData<List<WeatherModel>>
+        get() = _forecastModel
 
     // we get the weather from WeatherRepository repository
     private val weatherRepository = WeatherRepository(getDatabase(context))
-    var weather = weatherRepository.weatherList
+
+    // weather variables
+    private var _weather: MutableLiveData<WeatherForecastModel> =
+        weatherRepository.weatherList as MutableLiveData<WeatherForecastModel>
+    val weather: LiveData<WeatherForecastModel>
+        get() = _weather
+
+    // list of all weathers variable
     val weatherList = weatherRepository.weatherListAllAsDomain
 
 
+    // makes newwork call than takes weather from db
     fun getWeather(city: String): LiveData<WeatherForecastModel> {
         refreshWeatherFromRepository(city)
-        weather = weatherRepository.getCity(city)
-        return weather
+        _weather = weatherRepository.getCity(city) as MutableLiveData<WeatherForecastModel>
+        return _weather
     }
 
-    init {
-        sharedPrefUtils.getString(Constants.SELECTED_CITY, "null")?.let { getWeather(it) }
+
+    // gets weather from db without making network call
+    fun getWeatherFromDatabase(city: String){
+        _weather = weatherRepository.getCity(city) as MutableLiveData<WeatherForecastModel>
     }
+
+    fun changeForecastModelVariable(forecastList: List<WeatherModel>){
+        _forecastModel.value = forecastList
+    }
+
 
 
 
@@ -64,16 +88,34 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
     }
 
 
-    fun addedFiveDaysForecastDates() {
-        forecastDaysList = weather.value?.weatherList?.get(0)?.dateText?.let {
-            HelperClass.addFiveDaysForRecycler(it, 4)}!!
+
+    suspend fun deleteCity(city: String){
+        withContext(Dispatchers.IO){
+            weatherRepository.deleteCity(city)
+
+        }
     }
 
-    fun getFiveForecastDays() {
-        forecastWeatherModels.value = mutableListOf()
-        for (i in 0..4) {
-          forecastWeatherModels.value?.add(weather.value?.weatherList?.filter { it.dateText!!.contains(forecastDaysList[i])})
+    fun addedFiveDaysForecastDates() {
+        if (_weather.value?.weatherList?.get(0) != null) {
+            forecastDaysList = _weather.value?.weatherList?.get(0)?.dateText?.let {
+                HelperClass.addFiveDaysForRecycler(it, 4)
+            }!!
         }
+    }
+
+
+    fun getFiveForecastDays() {
+        val mutableList = mutableListOf<List<WeatherModel>>()
+            for (i in 0..4) {
+                _weather.value?.weatherList?.filter { it.dateText!!.contains(forecastDaysList[i]) }
+                    ?.let {
+                        mutableList.add(
+                            it
+                        )
+                    }
+            }
+            _forecastWeatherModels.value = mutableList
     }
 
 

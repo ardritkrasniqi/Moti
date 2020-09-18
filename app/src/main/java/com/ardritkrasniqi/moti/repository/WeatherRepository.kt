@@ -1,7 +1,10 @@
 package com.ardritkrasniqi.moti.repository
 
+import android.content.Context
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Transformations
+import com.ardritkrasniqi.moti.UtilityClasses.PrefUtils
 import com.ardritkrasniqi.moti.database.WeatherDatabase
 import com.ardritkrasniqi.moti.database.WeatherEntity
 import com.ardritkrasniqi.moti.database.asDomainModel
@@ -12,6 +15,7 @@ import com.ardritkrasniqi.moti.network.MotiNetwork
 import com.ardritkrasniqi.moti.network.asDatabaseModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import kotlin.coroutines.coroutineContext
 
 class WeatherRepository(private val database: WeatherDatabase) {
 
@@ -48,8 +52,12 @@ class WeatherRepository(private val database: WeatherDatabase) {
         return weatherList
     }
 
+    // function to delete a city
+    fun deleteCity(city:String){
+        database.WeatherDao.deleteCity(city)
+    }
 
-    val cityList: LiveData<List<String>> = database.WeatherDao.getCityNames()
+
     // I transform a liveData as List to another LiveData<List>
     private val weatherListAllAsDatabase = database.WeatherDao.getWeatherList()
     val weatherListAllAsDomain: LiveData<List<WeatherForecastModel>> =

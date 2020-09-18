@@ -1,15 +1,14 @@
-package com.ardritkrasniqi.moti.UtilityClasses
+package com.ardritkrasniqi.moti.adapters
 
+import android.util.Log
+import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.core.view.marginTop
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.ardritkrasniqi.moti.R
 import com.ardritkrasniqi.moti.domain.WeatherForecastModel
-import com.ardritkrasniqi.moti.domain.WeatherModel
-import com.ardritkrasniqi.moti.network.CityData
-import com.ardritkrasniqi.moti.network.CityDataList
-import com.ardritkrasniqi.moti.ui.addNewCity.CityAdapter
-import com.ardritkrasniqi.moti.ui.selectAddedCities.CitiesAdapter
 
 
 @BindingAdapter("listData")
@@ -37,13 +36,20 @@ fun addDescription(textView: TextView, cityTempDescription: String) {
 
 
 @BindingAdapter("imageResource")
-fun addImageResource(imageView: ImageView, imageResource: Int){
+fun addImageResource(imageView: ImageView, imageResource: Int) {
     imageView.setImageResource(imageResource)
 }
 
 @BindingAdapter("backgroundColorBinding")
-fun addBackgroundResource(imageView: ImageView, colorResource: Int){
+fun addBackgroundResource(imageView: ImageView, colorResource: Int) {
     imageView.setBackgroundResource(colorResource)
 }
 
+@BindingAdapter("onLongClick")
+fun setOnLongClickListener(view: View, listener: Runnable) {
+    view.setOnLongClickListener {
+        listener.run();
+        addImageResource(view as ImageView, R.drawable.selected_card_background)
+        true }
+}
 

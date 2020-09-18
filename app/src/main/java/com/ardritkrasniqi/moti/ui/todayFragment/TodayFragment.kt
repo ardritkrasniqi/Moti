@@ -1,6 +1,5 @@
 package com.ardritkrasniqi.moti.ui.todayFragment
 
-import android.app.Activity
 import android.content.Context
 import android.content.Context.SENSOR_SERVICE
 import android.hardware.Sensor
@@ -17,9 +16,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.animation.Animation.RELATIVE_TO_SELF
 import android.view.animation.RotateAnimation
-import android.view.inputmethod.InputMethodManager
 import androidx.core.content.ContextCompat
-import androidx.core.content.ContextCompat.getSystemService
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -94,11 +91,12 @@ class TodayFragment : Fragment(), SensorEventListener {
         )
         tempChart = binding.tempChart
 
-
-
+         // we make the call for updated weather
 
         // Sets the icon in weatherDescriptionIcon
-        viewModel.weather.observe(viewLifecycleOwner, Observer {
+        viewModel.weather.observe(viewLifecycleOwner, Observer { weather ->
+            requireNotNull(weather ?: sharedPreff.getString(Constants.SELECTED_CITY, "null")?.let { viewModel.getWeatherFromDatabase(it) })
+            // changes the main icon
             binding.weatherConditionIcon.setImageResource(
                 when (viewModel.weather.value?.weatherList?.get(0)?.weatherId) {
                     in 200..299 -> R.drawable.ic_thunderstorm_colored
@@ -112,10 +110,17 @@ class TodayFragment : Fragment(), SensorEventListener {
                     else -> R.drawable.ic_moon
                 }
             )
+            // changes the card icons
+            binding.card1Image.setImageResource(cardWeatherConditionIconResource(viewModel.weather.value?.weatherList?.get(0)?.weatherId))
+            binding.card2Image.setImageResource(cardWeatherConditionIconResource(viewModel.weather.value?.weatherList?.get(1)?.weatherId))
+            binding.card3Image.setImageResource(cardWeatherConditionIconResource(viewModel.weather.value?.weatherList?.get(2)?.weatherId))
+
         })
 
 
-        // goes to slectCityFragment
+
+
+            // goes to slectCityFragment
         binding.selectCity.setOnClickListener {
             findNavController().navigate(R.id.action_mainFragment_to_cities)
         }
@@ -126,7 +131,6 @@ class TodayFragment : Fragment(), SensorEventListener {
             ) { cityName ->
                 viewModel.getWeather(cityName)
             }
-        sharedPreff.getString(Constants.SELECTED_CITY, "null")?.let { viewModel.getWeather(it) }
         return binding.root
     }
 
@@ -183,6 +187,22 @@ class TodayFragment : Fragment(), SensorEventListener {
         for (i in input.indices) {
             output[i] = output[i] + alpha * (input[i] - output[i])
         }
+    }
+
+
+    fun cardWeatherConditionIconResource(weatherCondition: Int?): Int {
+        return when (weatherCondition) {
+            in 200..299 -> R.drawable.ic_cloudy
+            in 300..399 -> R.drawable.ic_cloudy
+            in 500..599 -> R.drawable.ic_rain
+            in 600..699 -> R.drawable.ic_snow_cloud_simple
+            in 700..799 -> R.drawable.ic_cloudy
+            800 -> R.drawable.ic_sunny
+            in 801..802 -> R.drawable.ic_005_cloudy_day_1
+            in 803..900 -> R.drawable.ic_cloudy
+            else -> R.drawable.ic_moon
+        }
+
     }
 
 }

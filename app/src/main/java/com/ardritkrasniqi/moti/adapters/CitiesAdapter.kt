@@ -1,16 +1,19 @@
-package com.ardritkrasniqi.moti.ui.selectAddedCities
+package com.ardritkrasniqi.moti.adapters
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.recyclerview.widget.DiffUtil
-import androidx.recyclerview.widget.ListAdapter
-import androidx.recyclerview.widget.RecyclerView
+import android.widget.Toast
+import androidx.recyclerview.widget.*
 import com.ardritkrasniqi.moti.R
 import com.ardritkrasniqi.moti.databinding.CityListItemBinding
 import com.ardritkrasniqi.moti.domain.WeatherForecastModel
 
 
-class CitiesAdapter(val clickListener: OnClickListener) : ListAdapter<WeatherForecastModel, CitiesAdapter.CityViewHolder>(DiffCallback) {
+class CitiesAdapter(
+    val clickListener: OnClickListener
+) : ListAdapter<WeatherForecastModel, CitiesAdapter.CityViewHolder>(
+    DiffCallback
+) {
 
 
     object DiffCallback : DiffUtil.ItemCallback<WeatherForecastModel>() {
@@ -25,7 +28,8 @@ class CitiesAdapter(val clickListener: OnClickListener) : ListAdapter<WeatherFor
     }
 
 
-    class CityViewHolder(var binding: CityListItemBinding) : RecyclerView.ViewHolder(binding.root) {
+    inner class CityViewHolder(var binding: CityListItemBinding) : RecyclerView.ViewHolder(binding.root){
+
         fun bind(
             cityName: WeatherForecastModel,
             clickListener: OnClickListener
@@ -55,13 +59,16 @@ class CitiesAdapter(val clickListener: OnClickListener) : ListAdapter<WeatherFor
                     }
                     )
             binding.executePendingBindings()
+
         }
     }
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CityViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
-        return CityViewHolder(CityListItemBinding.inflate(layoutInflater,parent,false))
+        return CityViewHolder(
+            CityListItemBinding.inflate(layoutInflater, parent, false)
+        )
     }
 
 
@@ -70,6 +77,8 @@ class CitiesAdapter(val clickListener: OnClickListener) : ListAdapter<WeatherFor
     }
 }
 
-class OnClickListener(val clickListener: (cityName: String) -> Unit){
+class OnClickListener(val clickListener: (cityName: String) -> Unit, val clickLongListener: (cityName: String) -> Unit){
     fun onClick(cityName: String) = clickListener(cityName)
+    fun onLongClick(cityName: String) = clickLongListener(cityName)
 }
+

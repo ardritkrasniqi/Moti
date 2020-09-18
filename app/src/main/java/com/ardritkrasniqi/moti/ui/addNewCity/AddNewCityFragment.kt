@@ -6,7 +6,10 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
-import android.view.*
+import android.view.LayoutInflater
+import android.view.MotionEvent
+import android.view.View
+import android.view.ViewGroup
 import android.widget.EditText
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -20,7 +23,6 @@ import com.ardritkrasniqi.moti.UtilityClasses.HelperClass
 import com.ardritkrasniqi.moti.UtilityClasses.PrefUtils
 import com.ardritkrasniqi.moti.databinding.AddNewCityFragmentBinding
 import com.ardritkrasniqi.moti.network.CityData
-import com.ardritkrasniqi.moti.ui.MainActivity
 
 class AddNewCityFragment : Fragment() {
 
@@ -47,9 +49,8 @@ class AddNewCityFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         initializeBinding(inflater)
-
-        NavigationUI.setupWithNavController(binding.toolbar, findNavController())
         binding.editText.setupClearButtonWithAction()
+        NavigationUI.setupWithNavController(binding.toolbar, findNavController())
         recyclerView = binding.cityResultsFragment
         sharedPreff =
             PrefUtils.with(requireContext(), Constants.SHAREDPREFF_NAME, Context.MODE_PRIVATE)
@@ -61,14 +62,15 @@ class AddNewCityFragment : Fragment() {
             }
 
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-                //nothing
+
             }
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                if (start > 2) {
+                if (count > 2) {
                     viewModel.getCityByPrefix(s.toString())
+                    Log.d("called", "im called from textchanged")
                 }
-                Log.d("triggered", " after textChanged is trigered")
+
             }
         })
 
@@ -76,8 +78,19 @@ class AddNewCityFragment : Fragment() {
             cityList = mutableListOf()   // clearing the list
             cityList.addAll(data.cityList)   // populating the list with new citys
             recyclerView.adapter = CityAdapter(cityList) { cityName ->
-                HelperClass.hideSoftKeyBoard(requireContext(), binding.editText)   // hides keyboard before navigating
-                sharedPreff.save(Constants.SELECTED_CITY, cityName.city)   // saves the selected city in sharedPreff
+                HelperClass.hideSoftKeyBoard(
+                    requireContext(),
+                    binding.editText
+                )   // hides keyboard before navigating
+                // saves the selected city in sharedPreff
+                sharedPreff.save(
+                    Constants.SELECTED_CITY,
+                    cityName.city
+                )
+                sharedPreff.save(
+                    Constants.SELECTED_CITY_COORDINATES,
+                    "${cityName.latitude},${cityName.longitude}"
+                )
                 findNavController().navigate(R.id.action_addNewCityFragment_to_mainFragment)   // pewwwwww wer navigating
             }
         })
@@ -102,7 +115,12 @@ class AddNewCityFragment : Fragment() {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) =
                 Unit
 
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) = Unit
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int){
+                if (start > 2) {
+                    viewModel.getCityByPrefix(s.toString())
+                    Log.d("called", "im called from textchanged")
+                }
+            }
         })
 
         setOnTouchListener(View.OnTouchListener { _, event ->

@@ -1,16 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-        
+
         <variable
             name="cityNamee"
             type="String" />
+
         <variable
             name="temperature"
             type="String" />
+
         <variable
             name="description"
             type="String" />
@@ -25,7 +27,8 @@
 
         <variable
             name="clickListener"
-            type="com.ardritkrasniqi.moti.ui.selectAddedCities.OnClickListener" />
+            type="com.ardritkrasniqi.moti.adapters.OnClickListener" />
+
 
     </data>
 
@@ -33,62 +36,68 @@
         android:layout_width="match_parent"
         android:layout_height="130dp"
         android:layout_margin="10dp"
+        android:background="@color/orangePic"
+        android:longClickable="true"
         app:cardCornerRadius="8dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:onClick="@{() -> clickListener.onClick(cityNamee)}">
+            android:background="@color/orangePic">
 
             <ImageView
                 android:id="@+id/gifImageView"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
                 backgroundColorBinding="@{backgroundColor}"
                 imageResource="@{imageResource}"
-                tools:src="@drawable/rainy_card"
+                onLongClick="@{() -> clickListener.onLongClick(cityNamee)}"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:onClick="@{() -> clickListener.onClick(cityNamee)}"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                cityNameItem="@{cityNamee}"
-                android:layout_margin="10dp"
-                android:id="@+id/city_name"
-                android:textColor="#fff"
-                android:fontFamily="@font/roboto_condensed_bold"
-                android:textSize="22sp"
-                tools:text="Prizren"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintStart_toStartOf="parent" />
+                tools:background="@color/rainyCardBackground"
+                tools:src="@drawable/rainy_card" />
+
 
             <TextView
+                android:id="@+id/city_name"
+                cityNameItem="@{cityNamee}"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:fontFamily="@font/roboto_condensed_bold"
+                android:textColor="#fff"
+                android:textSize="22sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="Prizren" />
+
+            <TextView
+                android:id="@+id/current_temp"
+                cityTemp="@{temperature}"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/roboto_condensed_regular"
                 android:textColor="@color/whiteColor"
                 android:textSize="19sp"
-                cityTemp="@{temperature}"
-                android:id="@+id/current_temp"
-                android:fontFamily="@font/roboto_condensed_regular"
                 app:layout_constraintStart_toStartOf="@+id/city_name"
                 app:layout_constraintTop_toBottomOf="@id/city_name"
                 tools:text="22°" />
 
             <TextView
+                android:id="@+id/weather_description"
+                cityWeatherDescription="@{description}"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                tools:text="Sunny"
-                app:layout_constraintStart_toEndOf="@id/current_temp"
-                android:textSize="19sp"
-                cityWeatherDescription="@{description}"
-                android:id="@+id/weather_description"
+                android:layout_marginStart="5dp"
                 android:fontFamily="@font/roboto_condensed_regular"
                 android:textColor="@color/whiteColor"
+                android:textSize="19sp"
                 app:layout_constraintBottom_toBottomOf="@id/current_temp"
-                android:layout_marginStart="5dp"/>
+                app:layout_constraintStart_toEndOf="@id/current_temp"
+                tools:text="Sunny" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>

@@ -130,15 +130,17 @@
                         android:layout_marginTop="15dp"
                         android:fontFamily="@font/roboto_condensed_regular"
                         android:gravity="center"
-                        android:text="@{viewModel.weather.weatherList.get(1).dateText.substring(11,16)}" />
+                        android:text="@{viewModel.weather.weatherList.get(0).dateText.substring(11,16)}" />
 
 
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="37dp"
+                        android:id="@+id/card1_image"
                         android:layout_gravity="center"
                         android:layout_marginTop="28dp"
-                        android:src="@drawable/ic_sunny" />
+                        android:tint="@color/whiteColor"
+                        tools:src="@drawable/ic_sunny" />
 
                     <TextView
                         style="@style/cardTextStyle"
@@ -177,15 +179,17 @@
                         android:layout_marginTop="15dp"
                         android:fontFamily="@font/roboto_condensed_regular"
                         android:gravity="center"
-                        android:text="@{viewModel.weather.weatherList.get(2).dateText.substring(11,16)}" />
+                        android:text="@{viewModel.weather.weatherList.get(1).dateText.substring(11,16)}" />
 
 
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="37dp"
                         android:layout_gravity="center"
+                        android:id="@+id/card2_image"
                         android:layout_marginTop="28dp"
-                        android:src="@drawable/ic_rain" />
+                        android:tint="@color/whiteColor"
+                        tools:src="@drawable/ic_rain" />
 
                     <TextView
                         style="@style/cardTextStyle"
@@ -227,7 +231,7 @@
                         android:layout_marginTop="15dp"
                         android:fontFamily="@font/roboto_condensed_regular"
                         android:gravity="center"
-                        android:text="@{viewModel.weather.weatherList.get(3).dateText.substring(11,16)}" />
+                        android:text="@{viewModel.weather.weatherList.get(2).dateText.substring(11,16)}" />
 
 
                     <ImageView
@@ -235,7 +239,9 @@
                         android:layout_height="37dp"
                         android:layout_gravity="center"
                         android:layout_marginTop="28dp"
-                        android:src="@drawable/ic_moon" />
+                        android:tint="@color/whiteColor"
+                        android:id="@+id/card3_image"
+                        tools:src="@drawable/ic_moon" />
 
                     <TextView
                         style="@style/cardTextStyle"

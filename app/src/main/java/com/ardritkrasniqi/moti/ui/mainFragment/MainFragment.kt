@@ -2,24 +2,22 @@ package com.ardritkrasniqi.moti.ui.mainFragment
 
 import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+import androidx.navigation.fragment.findNavController
 import androidx.viewpager2.widget.ViewPager2
 import com.ardritkrasniqi.moti.R
 import com.ardritkrasniqi.moti.UtilityClasses.Constants
 import com.ardritkrasniqi.moti.UtilityClasses.PrefUtils
 import com.ardritkrasniqi.moti.databinding.MainFragmentBinding
-import com.ardritkrasniqi.moti.ui.forecastFragment.ForecastAdapter
 import com.ardritkrasniqi.moti.ui.viewPager.ViewPagerAdapter
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 class MainFragment : Fragment() {
@@ -33,9 +31,13 @@ class MainFragment : Fragment() {
     }
 
 
+
+
     private lateinit var sharedPreff: PrefUtils
     private lateinit var binding: MainFragmentBinding
     private lateinit var viewPagerAdapter: ViewPagerAdapter
+    private var lat = ""
+    private var lon = ""
 
     private val onNavigationItemSelectedListener =
         BottomNavigationView.OnNavigationItemSelectedListener { item ->
@@ -64,6 +66,7 @@ class MainFragment : Fragment() {
         binding = MainFragmentBinding.inflate(inflater)
         viewPagerAdapter = ViewPagerAdapter(childFragmentManager, this.lifecycle)
         sharedPreff = PrefUtils(requireContext(), Constants.SHAREDPREFF_NAME, Context.MODE_PRIVATE)
+        lat = sharedPreff.getString()
         binding.apply {
             viewPager.adapter = viewPagerAdapter
             viewPager.registerOnPageChangeCallback(
@@ -75,12 +78,9 @@ class MainFragment : Fragment() {
             )
             bottomNav.setOnNavigationItemSelectedListener(onNavigationItemSelectedListener)
         }
-        sharedPreff.getString(Constants.SELECTED_CITY, "null")?.let { viewModel.getWeather(it) }
 
-        viewModel.weather.observe(viewLifecycleOwner, Observer {
-            viewModel.addedFiveDaysForecastDates()
-            viewModel.getFiveForecastDays()
-        })
+//        sharedPreff.getString(Constants.SELECTED_CITY, "null")?.let { viewModel.getWeather(it) } // we make the call for updated weather
+
         return binding.root
     }
 

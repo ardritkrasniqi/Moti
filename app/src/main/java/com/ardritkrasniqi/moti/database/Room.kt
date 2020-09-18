@@ -4,11 +4,12 @@ import android.content.Context
 import androidx.lifecycle.LiveData
 import androidx.room.*
 import androidx.room.TypeConverters
+import kotlinx.coroutines.selects.select
 
 @Dao
 interface WeatherDao {
 
-    @Query("select * from WeatherEntity ORDER BY weatherId ASC")
+    @Query("select * from WeatherEntity")
     fun getWeather(): LiveData<WeatherEntity>
 
     @Query("select * from weatherentity")
@@ -22,6 +23,9 @@ interface WeatherDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertWeather(weather: WeatherEntity)
+
+    @Query("DELETE from weatherentity where name=:cityName")
+    fun deleteCity(cityName: String)
 }
 
 @Database(

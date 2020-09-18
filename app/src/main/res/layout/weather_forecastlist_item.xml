@@ -1,55 +1,79 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
+        <variable
+            name="clickedItem"
+            type="String" />
+
+        <variable
+            name="currentDate"
+            type="String" />
+
+        <variable
+            name="imgResourceCode"
+            type="Integer" />
+
+        <variable
+            name="currentDay"
+            type="String" />
+
+        <variable
+            name="clickListener"
+            type="com.ardritkrasniqi.moti.adapters.OnClickListenerForecast" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="20dp"
+        android:layout_marginStart="20dp"
+        android:onClick="@{() -> clickListener.onClick(clickedItem)}"
         android:layout_marginTop="10dp"
-        android:layout_marginStart="20dp">
+        android:layout_marginEnd="20dp"
+        >
 
 
         <TextView
+            android:id="@+id/month_text"
+            forecastDate="@{currentDate}"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            tools:text="12 Aug"
-            android:id="@+id/month_text"
-            android:textSize="14sp"
             android:fontFamily="@font/roboto_condensed_regular"
             android:textColor="@color/blackColor"
-            app:layout_constraintStart_toStartOf="parent"
+            android:textSize="14sp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="12 Aug" />
 
         <ImageView
             android:id="@+id/weather_icon"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
             android:layout_marginTop="4dp"
+            forecastImage="@{imgResourceCode}"
+            android:src="@drawable/ic_moon_cloud"
+            android:tint="@color/blackColor"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/month_text"
-            android:tint="@color/blackColor"
-            android:src="@drawable/ic_moon_cloud" />
+            app:layout_constraintTop_toBottomOf="@id/month_text" />
 
         <TextView
+            android:id="@+id/day_text"
+            forecastDay="@{currentDay}"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            tools:text="M"
-            android:layout_marginTop="5dp"
-            android:id="@+id/dayOfWeek"
+            android:layout_marginTop="15dp"
             android:fontFamily="@font/roboto_condensed_regular"
             android:textColor="@color/blackColor"
             android:textSize="14sp"
-            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/weather_icon" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/weather_icon"
+            tools:text="M" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
