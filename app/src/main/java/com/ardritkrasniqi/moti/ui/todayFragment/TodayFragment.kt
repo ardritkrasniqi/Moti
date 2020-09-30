@@ -11,6 +11,7 @@ import android.hardware.SensorManager
 import android.hardware.SensorManager.SENSOR_DELAY_GAME
 import android.location.Geocoder
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -78,6 +79,10 @@ class TodayFragment : Fragment(), SensorEventListener {
         // Giving the binding access to the viewmodel
         // I jep akces bindit qe te perdore viewmodelin
         binding.viewModel = viewModel
+
+        val lat = sharedPreff.getString(Constants.SELECTED_CITY_COORDINATES_LAT, "0.0")!!.toDouble()
+        val lon = sharedPreff.getString(Constants.SELECTED_CITY_COORDINATES_LON, "0.0")!!.toDouble()
+
         // instantiating sensors
         sensorManager = (requireActivity().getSystemService(SENSOR_SERVICE) as SensorManager?)!!
         accelerometer = sensorManager.getDefaultSensor(TYPE_ACCELEROMETER)
@@ -95,7 +100,7 @@ class TodayFragment : Fragment(), SensorEventListener {
 
         // Sets the icon in weatherDescriptionIcon
         viewModel.weather.observe(viewLifecycleOwner, Observer { weather ->
-            requireNotNull(weather ?: sharedPreff.getString(Constants.SELECTED_CITY, "null")?.let { viewModel.getWeatherFromDatabase(it) })
+            requireNotNull(weather ?: viewModel.getWeatherFromDatabase(lat, lon))
             // changes the main icon
             binding.weatherConditionIcon.setImageResource(
                 when (viewModel.weather.value?.weatherList?.get(0)?.weatherId) {
@@ -129,7 +134,7 @@ class TodayFragment : Fragment(), SensorEventListener {
             ?.observe(
                 viewLifecycleOwner
             ) { cityName ->
-                viewModel.getWeather(cityName)
+                viewModel.getWeatherName(cityName)
             }
         return binding.root
     }

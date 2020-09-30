@@ -13,7 +13,9 @@ data class CityModel(
     val name: String? = "",
     val population: Int? = -1,
     val sunrise: Int? = -1,
-    val sunset: Int? = -1
+    val sunset: Int? = -1,
+    val lat: Double? = -1.0,
+    val lon: Double? = -1.0
 )
 
 data class WeatherModel(

@@ -46,14 +46,15 @@ class MainActivity : AppCompatActivity(){
         setContentView(R.layout.activity_main)
 
         if(sharedPref.getString(Constants.SELECTED_CITY, "null").equals("null")){
-           GlobalScope.launch { getLastLocation() }
+           GlobalScope.launch {
+               getLastLocation()
+               delay(1000)}
         }
-
     }
 
 
 
-    suspend fun getLastLocation(): String {
+    private suspend fun getLastLocation(): String {
         return suspendCoroutine { coroutine ->
             var adress: MutableList<Address>
             if (checkPermission()) {
@@ -79,7 +80,6 @@ class MainActivity : AppCompatActivity(){
                 requestPermission()
             }
         }
-
     }
 
     fun turnLocationOn(){

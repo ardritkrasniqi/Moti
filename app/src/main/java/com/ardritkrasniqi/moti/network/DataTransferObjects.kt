@@ -23,8 +23,19 @@ data class City(
     val population: Int?,
     val sunrise: Int?,
     val sunset: Int?,
+    val coord: Coord,
     val timezone: Int?
 )
+
+@JsonClass(generateAdapter = true)
+@Json(name = "coord")
+data class Coord(
+    @Json(name = "lat")
+    val lat: Double,
+    @Json(name = "lon")
+    val lon: Double
+)
+
 @JsonClass(generateAdapter = true)
 @Json(name = "main")
 data class Main(
@@ -112,6 +123,8 @@ fun WeatherList.asDatabaseModel(): WeatherEntity {
         population = this.city.population,
         sunset = this.city.sunset,
         sunrise = this.city.sunrise,
+        lat = this.city.coord.lat,
+        lon = this.city.coord.lon,
         weather = weatherAllList.map {
             com.ardritkrasniqi.moti.database.Weather(
                 dateUnix = it.dateUnix,

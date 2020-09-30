@@ -58,11 +58,11 @@ class AddNewCityFragment : Fragment() {
 
         binding.editText.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {
-
+                // nothing
             }
 
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-
+                // nothing
             }
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
@@ -70,7 +70,6 @@ class AddNewCityFragment : Fragment() {
                     viewModel.getCityByPrefix(s.toString())
                     Log.d("called", "im called from textchanged")
                 }
-
             }
         })
 
@@ -88,8 +87,12 @@ class AddNewCityFragment : Fragment() {
                     cityName.city
                 )
                 sharedPreff.save(
-                    Constants.SELECTED_CITY_COORDINATES,
-                    "${cityName.latitude},${cityName.longitude}"
+                    Constants.SELECTED_CITY_COORDINATES_LAT,
+                    cityName.latitude
+                )
+                sharedPreff.save(
+                    Constants.SELECTED_CITY_COORDINATES_LON,
+                    cityName.longitude
                 )
                 findNavController().navigate(R.id.action_addNewCityFragment_to_mainFragment)   // pewwwwww wer navigating
             }
@@ -115,7 +118,7 @@ class AddNewCityFragment : Fragment() {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) =
                 Unit
 
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int){
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 if (start > 2) {
                     viewModel.getCityByPrefix(s.toString())
                     Log.d("called", "im called from textchanged")

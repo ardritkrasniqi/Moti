@@ -15,8 +15,11 @@ interface WeatherDao {
     @Query("select * from weatherentity")
     fun getWeatherList(): LiveData<List<WeatherEntity>>
 
+    @Query("select * from weatherentity where lat=:lat and lon=:lon")
+    fun getWeatherByCityId(lat: Double, lon: Double): LiveData<WeatherEntity?>
+
     @Query("select * from weatherentity where name=:cityName")
-    fun getWeatherByCityId(cityName: String): LiveData<WeatherEntity?>
+    fun getWeatherByCityIdName(cityName: String): LiveData<WeatherEntity?>
 
     @Query("select name from weatherentity")
     fun getCityNames(): LiveData<List<String>>
@@ -30,7 +33,7 @@ interface WeatherDao {
 
 @Database(
     entities = [WeatherEntity::class],
-    version = 7, exportSchema = false
+    version = 8, exportSchema = false
 )
 @TypeConverters(value = [WeatherConverter::class])
 abstract class WeatherDatabase : RoomDatabase() {

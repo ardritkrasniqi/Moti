@@ -56,31 +56,43 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
 
 
     // makes newwork call than takes weather from db
-    fun getWeather(city: String): LiveData<WeatherForecastModel> {
-        refreshWeatherFromRepository(city)
-        _weather = weatherRepository.getCity(city) as MutableLiveData<WeatherForecastModel>
+    fun getWeather(lat: Double, lon: Double): LiveData<WeatherForecastModel> {
+        refreshWeatherFromRepository(lat, lon)
+        _weather = weatherRepository.getCity(lat, lon) as MutableLiveData<WeatherForecastModel>
+        return _weather
+    }
+
+    // makes newwork call than takes weather from db
+    fun getWeatherName(city: String): LiveData<WeatherForecastModel> {
+        refreshWeatherFromRepositoryName(city)
+        _weather = weatherRepository.getCityName(city) as MutableLiveData<WeatherForecastModel>
         return _weather
     }
 
 
     // gets weather from db without making network call
-    fun getWeatherFromDatabase(city: String){
-        _weather = weatherRepository.getCity(city) as MutableLiveData<WeatherForecastModel>
+    fun getWeatherFromDatabase(lat: Double, lon: Double){
+        _weather = weatherRepository.getCity(lat, lon) as MutableLiveData<WeatherForecastModel>
     }
-
-    fun changeForecastModelVariable(forecastList: List<WeatherModel>){
-        _forecastModel.value = forecastList
-    }
-
 
 
 
     // Funksioni i cili thirret nga initi i viewmodelit per te marre motin e updatuar
     // Ben thirrjen ne repository dhe i ben cache ne db
-    private fun refreshWeatherFromRepository(city: String) {
+    private fun refreshWeatherFromRepository(lat: Double, lon: Double) {
         viewModelScope.launch {
             try {
-                weatherRepository.refreshWeather(city, "metric")
+                weatherRepository.refreshWeather(lat, lon, "metric")
+            } catch (error: Exception) {
+                _status.value = "Error: ${error.localizedMessage}"
+            }
+        }
+    }
+
+    private fun refreshWeatherFromRepositoryName(city: String) {
+        viewModelScope.launch {
+            try {
+                weatherRepository.refreshWeatherName(city, "metric")
             } catch (error: Exception) {
                 _status.value = "Error: ${error.localizedMessage}"
             }

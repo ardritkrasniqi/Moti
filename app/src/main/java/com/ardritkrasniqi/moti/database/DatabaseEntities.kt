@@ -23,6 +23,10 @@ data class WeatherEntity constructor(
     val sunrise: Int?,
     @ColumnInfo(name = "sunset")
     val sunset: Int?,
+    @ColumnInfo(name = "lat")
+    val lat: Double?,
+    @ColumnInfo(name = "lon")
+    val lon: Double?,
     val weatherId: UUID = UUID.randomUUID(),
     @ColumnInfo(name = "list")
     val weather: List<Weather>?
@@ -62,6 +66,8 @@ fun WeatherEntity.asDomainModel(): WeatherForecastModel {
             population = population,
             sunrise = sunrise,
             sunset = sunset,
+            lat = lat,
+            lon = lon,
             id = id
         ),
         weatherList = weather?.map {

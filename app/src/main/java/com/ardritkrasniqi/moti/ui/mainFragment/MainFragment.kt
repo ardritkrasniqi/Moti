@@ -36,8 +36,8 @@ class MainFragment : Fragment() {
     private lateinit var sharedPreff: PrefUtils
     private lateinit var binding: MainFragmentBinding
     private lateinit var viewPagerAdapter: ViewPagerAdapter
-    private var lat = ""
-    private var lon = ""
+    private var lat: Double = 0.0
+    private var lon: Double = 0.0
 
     private val onNavigationItemSelectedListener =
         BottomNavigationView.OnNavigationItemSelectedListener { item ->
@@ -66,7 +66,8 @@ class MainFragment : Fragment() {
         binding = MainFragmentBinding.inflate(inflater)
         viewPagerAdapter = ViewPagerAdapter(childFragmentManager, this.lifecycle)
         sharedPreff = PrefUtils(requireContext(), Constants.SHAREDPREFF_NAME, Context.MODE_PRIVATE)
-        lat = sharedPreff.getString()
+        lat = sharedPreff.getString(Constants.SELECTED_CITY_COORDINATES_LAT, "0.0")!!.toDouble()
+        lon = sharedPreff.getString(Constants.SELECTED_CITY_COORDINATES_LON, "0.0")!!.toDouble()
         binding.apply {
             viewPager.adapter = viewPagerAdapter
             viewPager.registerOnPageChangeCallback(
@@ -79,8 +80,7 @@ class MainFragment : Fragment() {
             bottomNav.setOnNavigationItemSelectedListener(onNavigationItemSelectedListener)
         }
 
-//        sharedPreff.getString(Constants.SELECTED_CITY, "null")?.let { viewModel.getWeather(it) } // we make the call for updated weather
-
+        viewModel.getWeather(lat, lon)
         return binding.root
     }
 

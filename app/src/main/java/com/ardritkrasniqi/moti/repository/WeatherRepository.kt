@@ -29,9 +29,16 @@ class WeatherRepository(private val database: WeatherDatabase) {
      *
      */
 
-    suspend fun refreshWeather(city: String, unit: String) {
+    suspend fun refreshWeather(lat: Double, lon: Double, unit: String) {
         withContext(Dispatchers.IO) {
-            val weatherList = MotiNetwork.motiService.getForecastWeather(city, unit).await()
+            val weatherList = MotiNetwork.motiService.getForecastWeather(lat, lon, unit).await()
+            database.WeatherDao.insertWeather(weatherList.asDatabaseModel())
+        }
+    }
+
+    suspend fun refreshWeatherName(city: String, unit: String) {
+        withContext(Dispatchers.IO) {
+            val weatherList = MotiNetwork.motiService.getForecastWeatherName(city, unit).await()
             database.WeatherDao.insertWeather(weatherList.asDatabaseModel())
         }
     }
@@ -45,8 +52,15 @@ class WeatherRepository(private val database: WeatherDatabase) {
             it?.asDomainModel()
         }
 
-    fun getCity(city: String): LiveData<WeatherForecastModel>{
-        weatherList = Transformations.map(database.WeatherDao.getWeatherByCityId(city)){
+    fun getCity(lat: Double, lon: Double): LiveData<WeatherForecastModel>{
+        weatherList = Transformations.map(database.WeatherDao.getWeatherByCityId(lat, lon)){
+            it?.asDomainModel()
+        }
+        return weatherList
+    }
+
+    fun getCityName(city: String): LiveData<WeatherForecastModel>{
+        weatherList = Transformations.map(database.WeatherDao.getWeatherByCityIdName(city)){
             it?.asDomainModel()
         }
         return weatherList

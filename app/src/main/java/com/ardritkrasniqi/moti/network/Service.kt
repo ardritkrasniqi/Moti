@@ -30,11 +30,21 @@ interface GeoDbService{
 interface WeatherService {
     @GET("forecast")
     fun getForecastWeather(
+        @Query("lat") lat: Double,
+        @Query("lon") lon: Double,
+        @Query("units") unit: String,
+        @Query("appid") appId: String = APPLICATION_KEY
+    ): Deferred<WeatherList>
+
+    @GET("forecast")
+    fun getForecastWeatherName(
         @Query("q") city: String,
         @Query("units") unit: String,
         @Query("appid") appId: String = APPLICATION_KEY
     ): Deferred<WeatherList>
 }
+
+
 // Pika hyrese per akses ne network
 object MotiNetwork {
     // krijon ne instance te retrofitit

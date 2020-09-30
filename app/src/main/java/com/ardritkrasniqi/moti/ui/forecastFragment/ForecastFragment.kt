@@ -48,7 +48,8 @@ class ForecastFragment : Fragment() {
         recyclerView = binding.recyclerView
         binding.lifecycleOwner = this
         binding.viewModel = viewModel
-        sharedPreff.getString(Constants.SELECTED_CITY, "null")?.let { viewModel.getWeatherFromDatabase(it) } // gets the weather from db
+        val city = sharedPreff.getString(Constants.SELECTED_CITY, "null")
+        viewModel.getWeatherName(city!!)// gets the weather from db
         binding.recyclerView.adapter = ForecastAdapter(OnClickListenerForecast {
             Log.d("clicked", it.toString())
         })
